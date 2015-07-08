@@ -1,0 +1,38 @@
+{% extends "@BurutMenu/burut_layout.html.twig" %}
+
+{% block content %}
+    This is Our Team page<br/><br/>
+
+        <table style="text-align:center; border-collapse:collapse; border:2px solid black;">
+            <tr style="text-align: center;">
+                <td class="td1"> id </td>
+                <td class="td2"> {{ ourteam.id }} </td>
+            </tr>
+            <tr style="text-align: center;">
+                <td class="td1"> name </td>
+                <td class="td2"> {{ ourteam.name }} </td>
+            <tr style="text-align: center;">
+                <td class="td1"> position </td>
+                <td class="td2"> {{ ourteam.position }} </td>
+            </tr>
+            <tr style="text-align: center;">
+                <td class="td1"> age </td>
+                <td class="td2"> {{ ourteam.age }} </td>
+            </tr>
+            <tr style="text-align: center;">
+                <td class="td1"> photo </td>
+                <td class="td2"> <img width="80px" height="80px" src=" {{ ourteam.photo }} "> </td>
+            </tr>
+            <tr style="text-align: center;">
+                <td class="td1"> bio </td>
+                <td class="td2"> {{ ourteam.bio }} </td>
+            </tr>
+        </table>
+
+{% endblock %}
+
+{% block m6 %}
+    <b><a href="/ourteams">OUR TEAM</a></b>
+{% endblock %}
+
+{% block title %}Our Team{% endblock %}

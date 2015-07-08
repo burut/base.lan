@@ -1,0 +1,38 @@
+{% extends "@BurutMenu/burut_layout.html.twig" %}
+
+{% block content %}
+    This is Products page123<br/><br/>
+
+
+    <table style="text-align:center; border-collapse:collapse; border:2px solid black;">
+        <tr style="text-align: center;">
+
+            <th class="td1">id</th>
+            <th class="td1">картинка</th>
+            <th class="td1">название</th>
+            <th class="td1">цена</th>
+            <th class="td1">  </th>
+
+
+        </tr>
+        {% for product in products %}
+
+                <tr>
+                    <td class="prod2"> {{ product.id }} </td>
+                    <td class="prod2"> <img width="50px" height="50px" src=" {{ product.img }} "> </td>
+                    <td class="prod2"> {{ product.title }} </td>
+                    <td class="prod2"> {{ product.price }} </td>
+                    <td class="prod2"> <a href="/product/{{ product.id }}"> Подробнее.. </a> </td>
+                </tr>
+
+        {% endfor %}
+    </table>
+    <b><a href="/product_create">Добавить продукт</a></b>
+
+{% endblock %}
+
+{% block m5 %}
+    <b>PRODUCTS</b>
+{% endblock %}
+
+{% block title %}Products{% endblock %}

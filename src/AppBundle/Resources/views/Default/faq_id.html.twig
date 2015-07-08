@@ -1,0 +1,14 @@
+{% extends "@BurutMenu/burut_layout.html.twig" %}
+
+{% block content %}
+    This is FAQ ID page<br/><br/>
+
+    {% if id==0 %}
+        <div style="color: red;"><h1>Question not found!</h1></div>
+    {% else %}
+        <div style="color: red";><h2>{{ q }}</h2></div>
+        <div style="margin: 0 0 10px 20px;"><h2>{{ a }}</h2></div>
+    {% endif %}
+{% endblock %}
+
+{% block title %}FAQ ID{% endblock %}

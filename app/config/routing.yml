@@ -1,3 +1,8 @@
-app:
-    resource: @AppBundle/Controller/
+#app:
+#    resource: @AppBundle/Controller/
+#    type:     annotation
+#
+base:
+    resource: "@AppBundle/Controller/"
     type:     annotation
+    prefix:   /

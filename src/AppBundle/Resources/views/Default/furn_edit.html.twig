@@ -1,0 +1,21 @@
+{% extends "@BurutMenu/burut_layout.html.twig" %}
+
+{% block content %}
+    This is furniture edit page<br/><br/>
+
+
+    <form action="{{ path('_furn_edit', {id: furn.id}) }}" method="post" {{ form_enctype(form) }}>
+        {{ form_widget(form) }}
+
+        <input type="submit" />
+    </form>
+
+
+
+{% endblock %}
+
+{% block m9 %}
+    <b><a href="/furn/list">Фурнитура</a></b>
+{% endblock %}
+
+{% block title %}site{% endblock %}

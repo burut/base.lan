@@ -1,0 +1,42 @@
+{% extends "@BurutMenu/burut_layout.html.twig" %}
+
+{% block content %}
+    This Furniture  page<br/><br/>
+
+
+    <table style="text-align:center; border-collapse:collapse; border:2px solid black;">
+        <tr style="text-align: center;">
+
+            <th style="padding-left:25px; padding-right:25px; border-bottom:2px solid #000000; border-left:2px solid #000000;"> id </th>
+            <th style="padding-left:25px; padding-right:25px; border-bottom:2px solid #000000; border-left:2px solid #000000;"> art </th>
+            <th style="padding-left:25px; padding-right:25px; border-bottom:2px solid #000000; border-left:2px solid #000000;"> nazv </th>
+            <th style="padding-left:25px; padding-right:25px; border-bottom:2px solid #000000; border-left:2px solid #000000;"> price </th>
+            <th style="padding-left:25px; padding-right:25px; border-bottom:2px solid #000000; border-left:2px solid #000000;"></th>
+            <th style="padding-left:25px; padding-right:25px; border-bottom:2px solid #000000; border-left:2px solid #000000;"></th>
+
+        </tr>
+        {% for furnit in furn %}
+
+           <tr>
+              <td style="border-bottom:2px solid #000000; border-left:2px solid #000000;"> {{ furnit.id }} </td>
+              <td style="border-bottom:2px solid #000000; border-left:2px solid #000000;"> {{ furnit.art }} </td>
+              <td style="border-bottom:2px solid #000000; border-left:2px solid #000000;"> {{ furnit.nazv }} </td>
+              <td style="border-bottom:2px solid #000000; border-left:2px solid #000000;"> {{ furnit.price }} </td>
+              <td style="border-bottom:2px solid #000000; border-left:2px solid #000000;"> <a href="/furn/delete/{{furnit.id}}">del pos</a></td>
+              <td style="border-bottom:2px solid #000000; border-left:2px solid #000000;"> <a href="{{ path("_furn_edit", {id: furnit.id}) }}">edit furniture{{ furnit.id }}</a></td>
+
+           </tr>
+
+        {% endfor %}
+
+    </table>
+
+    <br/><br/><br/> <a href="/furn_create">create new Furniture</a>
+
+
+{% endblock %}
+
+{% block m9 %}
+    <b>Фурнитура</b>{% endblock %}
+
+{% block title %}site{% endblock %}

@@ -1,0 +1,71 @@
+{% extends "@BurutMenu/burut_layout.html.twig" %}
+
+{% block js %}
+    <script>
+        $(function() {
+            $("#refresh").click(function() {
+                $("#tweets table, #tweets th, #tweets td").css("border-color", "#ddd");
+                $("#tweets").css("color", "#ddd");
+
+                $.get( "/twitter_feed", function( data ) {
+
+                    setTimeout(function() {
+                        $("#tweets").html(data);
+                        $("#tweets table, #tweets th, #tweets td").css("border-color", "#000");
+                        $("#tweets").css("color", "#000");
+                    }, 1000);
+
+                });
+            });
+        });
+    </script>
+{% endblock %}
+
+
+{% block content %}
+    This Mini Twitter page<br/><br/>
+
+    <div id="formfixed">
+        <form action="{{ path('_twit_edit') }}" method="post" {{ form_enctype(form) }}>
+            {{ form_errors(form) }}
+            <div>
+                {{ form_label(form.name) }}
+                {{ form_errors(form.name) }}
+                {{ form_widget(form.name) }}
+            </div>
+
+            <div class="form_message">
+                {{ form_label(form.message) }}
+                {{ form_errors(form.message) }}
+                {{ form_widget(form.message) }}
+            </div>
+
+            <div>
+                {{ form_label(form.image) }}
+                {{ form_errors(form.image) }}
+                {{ form_widget(form.image) }}
+            </div>
+
+            {{ form_rest(form) }}
+
+            <input type="submit" value="Tweet"/>
+        </form>
+
+        {#<form action="{{ path('_twit_edit') }}" method="post" {{ form_enctype(form) }}>#}
+            {#{{ form_widget(form) }}#}
+            {#<input type="submit" value="Tweet"/>#}
+        {#</form>#}
+            <div id="refresh"> Refresh </div>
+    </div>
+
+
+    <div id="tweets">
+        {% include '@BurutMenu/MiniTwitter/table.html.twig' %}
+    </div>
+
+{% endblock %}
+
+{% block m10 %}
+    <b>Мини твитер</b>{% endblock %}
+
+{% block title %}Mini Twitter{% endblock %}

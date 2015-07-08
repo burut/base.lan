@@ -1,0 +1,46 @@
+{% extends "@BurutMenu/burut_layout.html.twig" %}
+
+{% block content %}
+    This is Product page<br/><br/>
+
+
+
+        <table style="text-align:center; border-collapse:collapse; border:2px solid black;">
+            <tr style="text-align: center;">
+                <td class="td1"> id </td>
+                <td class="td2"> {{ product.id }} </td>
+            </tr>
+            <tr style="text-align: center;">
+                <td class="td1"> картинка </td>
+                <td class="td2"> <img width="50px" height="50px" src=" {{ product.img }} "> </td>
+            <tr style="text-align: center;">
+                <td class="td1"> название </td>
+                <td class="td2"> {{ product.title }} </td>
+            </tr>
+            <tr style="text-align: center;">
+                <td class="td1"> цена </td>
+                <td class="td2"> {{ product.price }} </td>
+            </tr>
+            <tr style="text-align: center;">
+                <td class="td1"> комент </td>
+                <td class="td2"> {{ product.comments }} </td>
+            </tr>
+            <tr>
+                <td class="td1"> удалить позицию </td>
+                <td class="td2"> <a href="/product/delete/{{product.id}}">del pos</a></td>
+            </tr>
+            <tr>
+                <td class="td1"> редактировать позицию </td>
+                <td class="td2"> <a href="{{ path("_product_edit", {id: product.id}) }}">edit product{{ product.id }}</a></td>
+            </tr>
+
+        </table>
+
+
+{% endblock %}
+
+{% block m5 %}
+    <b><a href="/products/list">PRODUCTS</a></b>
+{% endblock %}
+
+{% block title %}Product{% endblock %}

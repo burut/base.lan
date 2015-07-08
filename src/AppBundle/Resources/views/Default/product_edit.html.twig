@@ -1,0 +1,21 @@
+{% extends "@BurutMenu/burut_layout.html.twig" %}
+
+{% block content %}
+    This is product edit page<br/><br/>
+
+
+    <form action="{{ path('_product_edit', {id: product.id}) }}" method="post" {{ form_enctype(form) }}>
+        {{ form_widget(form) }}
+
+        <input type="submit"/>
+    </form>
+
+
+
+{% endblock %}
+
+{% block m5 %}
+    <b><a href="/product_list">PRODUCT</a></b>
+{% endblock %}
+
+{% block title %}site{% endblock %}
