@@ -4,11 +4,11 @@
     <div style="text-align:center; padding-top: 10%; ">Private Base</div><br/><br/>
     {#variable text:#}
     <span style="background-color: #0088CC;">{{ text }}</span>
-    {#<form action="{{ path('_user_edit', {id: user.id}) }}" method="post" {{ form_enctype(form) }}>#}
-        {#{{ form_widget(form) }}#}
+    <form action="{{ path('_user_edit', {id: user.id}) }}" method="post" {{ form_enctype(form) }}>
+        {{ form_widget(form) }}
 
-        {#<input type="submit" />#}
-    {#</form>#}
+        <input type="submit" />
+    </form>
 {% endblock %}
 
 {% block title %} MAIN PAGE {% endblock %}
