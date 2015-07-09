@@ -1,121 +1,14 @@
-<!DOCTYPE html>
-<html>
-<head>
-    {% block title %}<a href="/index"><div style="text-align:center; padding-top: 10%; ">Private Base</div></a><br/><br/>{% endblock %}
-    {#<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>#}
-    {#{% block js %}{% endblock %}#}
-</head>
-<body>
+{#{% extends "@BurutMenu/burut_layout.html.twig" %}#}
 
+{% block content %}
+    <div style="text-align:center; padding-top: 10%; ">Private Base</div><br/><br/>
+    {#variable text:#}
+    <span style="background-color: #0088CC;">{{ text }}</span>
+    {#<form action="{{ path('_user_edit', {id: user.id}) }}" method="post" {{ form_enctype(form) }}>#}
+        {#{{ form_widget(form) }}#}
 
-<div style="margin: 50px 0;">
-    {% block content %}
-        {% extends "@BaseMenu/vhod_.html.twig" %}
+        {#<input type="submit" />#}
+    {#</form>#}
+{% endblock %}
 
-    {% endblock %}
-</div>
-
-{% block m1 %}or <a href="/register">Register</a>{% endblock %}
-
-
-<div style="margin: 50px 0;">
-    {% block footer %}
-        (c) Burut, 2015
-    {% endblock %}
-</div>
-</body>
-<style type="text/css">
-    .td1 {
-        padding-left:25px;
-        padding-right:25px;
-        border-bottom:2px solid #000000;
-        border-left:2px solid #000000;}
-    .td2 {border-bottom:2px solid #000000;
-        border-left:2px solid #000000;
-        max-width: 260px;}
-
-    .prod2{border-bottom:2px solid #000000;
-        border-left:2px solid #000000;}
-
-    #refresh {
-        font-weight: bold;
-        margin: 10px 0;
-        background-color: #aaa;
-        width: 80px;
-        border-radius: 5px;
-        text-align: center;
-        padding: 5px 0;
-        cursor: pointer;
-    }
-
-    #tweets{
-        border: solid dimgray 2px;
-        background-color: #aaa;
-        position: absolute;
-        left: 260px;
-        top: 180px;
-    }
-
-    #formfixed{
-        position: fixed;
-        left:10px; top:300px;
-    }
-
-    .tweet{
-        border: solid dimgray 3px;
-        border-radius: 10px;
-        background-color: #f9ecec;
-        padding: 10px;
-        margin: 3px;
-    }
-
-    .createdAt{
-        width: 180px;
-        display: inline-block;
-        font-size: 12px;
-    }
-
-    .name{
-        max-width: 100px;
-        display: inline;
-    }
-
-    .i1{
-        display:inline-block;
-        vertical-align:top;
-    }
-
-    .image{
-        width: 80px;
-        height: 80px;
-        border-radius: 7px;
-        border: solid #000000 2px;
-    }
-
-    .message {
-        max-width: 400px;
-        padding-left: 100px;
-    }
-    .form_message{
-        height: 30px;
-
-    }
-
-
-</style>
-</html>
-{#&#123;&#35;{% extends "@BurutMenu/burut_layout.html.twig" %}&#35;&#125;#}
-
-{#{% block content %}#}
-
-    {#<span style="background-color: #0088CC;">{{ text }}</span>#}
-    {#&#123;&#35;<form action="{{ path('_user_edit', {id: user.id}) }}" method="post" {{ form_enctype(form) }}>&#35;&#125;#}
-        {#&#123;&#35;{{ form_widget(form) }}&#35;&#125;#}
-
-        {#&#123;&#35;<input type="submit" />&#35;&#125;#}
-    {#&#123;&#35;</form>&#35;&#125;#}
-    {#{% block m1 %}or<hr><a href="/register">Register</a>{% endblock %}#}
-
-{#{% endblock %}#}
-
-{#{% block title %} MAIN PAGE {% endblock %}#}
+{% block title %} MAIN PAGE {% endblock %}
