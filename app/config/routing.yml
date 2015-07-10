@@ -6,3 +6,8 @@ base:
     resource: "@AppBundle/Controller/"
     type:     annotation
     prefix:   /
+login:
+    pattern:   /login
+    defaults:  { _controller: AcmeSecurityBundle:Security:login }
+login_check:
+    pattern:   /login_check

@@ -1,12 +1,9 @@
+# app/config/security.yml
 security:
-    providers:
-        in_memory:
-            memory: ~
-
     firewalls:
-        dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
-            security: false
-
-        default:
+        secured_area:
+            pattern:    ^/
             anonymous: ~
+            form_login:
+                login_path:  /login
+                check_path:  /login_check
