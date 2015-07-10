@@ -1,13 +1,5 @@
-#app:
-#    resource: @AppBundle/Controller/
-#    type:     annotation
-#
-base:
-    resource: "@AppBundle/Controller/"
+burut_base:
+    resource: "@BurutBaseBundle/Controller/"
     type:     annotation
     prefix:   /
-login:
-    pattern:   /login
-    defaults:  { _controller: AcmeSecurityBundle:Security:login }
-login_check:
-    pattern:   /login_check
+
