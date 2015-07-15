@@ -7,9 +7,17 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Security\Core\SecurityContext;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
+use Burut\BaseBundle\Entity\User;
+use Burut\BaseBundle\Entity\Base;
+use Burut\BaseBundle\Entity\BaseField;
+
+
 
 class DefaultController extends Controller
 {
+    public $text;
 
     /**
      * @Route("/", name="_home")
@@ -21,9 +29,33 @@ class DefaultController extends Controller
 
         $user = $this->getUser();
 
-        var_dump($user);
+        $bases = $this->getDoctrine()
+            ->getRepository('BurutBaseBundle:Base')
+            ->findAll();
+        if (!count($bases))
+        {
+            foreach ($this->bases as $row)
+            {
+                $base = new Base();
 
-        return array('name' => "index");
+                $base->setUser_id($row["user_id"]);
+                $base->setTitle($row["title"]);
+                $base->setColor($row["color"]);
+                $base->setKeyField_id($row["keyField_id"]);
+                $base->setCreated_at($row["created_at"]);
+
+                $em = $this->getDoctrine()->getEntityManager();
+                $em->persist($base);
+                $em->flush();
+                $bases[] = $base;
+
+            }
+        }
+
+        var_dump($user);
+        var_dump($bases);
+
+        return array('name' => "index", "bases" => $bases);
     }
 
 
@@ -47,6 +79,7 @@ class DefaultController extends Controller
             // имя, введённое пользователем в последний раз
             'last_username' => $session->get(SecurityContext::LAST_USERNAME),
             'error'         => $error,
+            'text',
         );
     }
 
@@ -68,5 +101,54 @@ class DefaultController extends Controller
         // as the route is handled by the Security system
     }
 
+    /**
+     * @Route("/register", name="_register")
+     */
+    public function registerAction()
+    {
+        // this controller will not be executed,
+        // as the route is handled by the Security system
+    }
 
+    /**
+     * @Route("/user_create", name="_user_create")
+     */
+    public function userCreateAction()
+    {
+        $user = new User();
+        $user->setEmail("");
+        $user->setPassword("");
+        $user->setName("");
+//        $user->set("");
+        $em = $this->getDoctrine()->getEntityManager();
+        $em->persist($user);
+        $em->flush();
+        return $this->redirectToRoute('_user_edit', array('id'=>$user->getId()));
+    }
+
+    /**
+     * @Route("/user/edit/{id}", name="_user_edit")
+     * @Template()
+     */
+    public function userEditAction($id, Request $request)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        $user = $em->getRepository('BurutBaseBundle:User')->find($id);
+
+        $form = $this->createFormBuilder($user)
+            ->add('email', 'text')
+            ->add('password', 'text')
+            ->add('name', 'text')
+            ->getForm();
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getEntityManager();
+            $em->persist($user);
+            $em->flush();
+            return $this->redirectToRoute('_login');
+        }
+        return array(
+            "user" => $user,
+            "form" => $form->createView());
+    }
 }

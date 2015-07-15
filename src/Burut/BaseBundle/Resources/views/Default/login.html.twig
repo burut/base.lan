@@ -1,14 +1,17 @@
-{% if error %}
-    <div>{{ error.message }}</div>
-{% endif %}
+{#{% if error %}#}
+    {#<div>{{ error.message }}</div>#}
+{#{% endif %}#}
 
+<div style="text-align: center; padding-top: 40px;">Private Base</div>
+
+<div style="text-align: center; padding-top: 40px;">
 <form action="{{ path('login_check') }}" method="post">
-    <label for="username">Username:</label>
+    <label for="username">E-mail:</label> &nbsp;&nbsp;&nbsp;
     <input type="text" id="username" name="_username" value="{{ last_username }}" />
-
+    <br/>
     <label for="password">Password:</label>
     <input type="password" id="password" name="_password" />
-
+<br/>
     {#
         Если вы хотите контролировать URL, на который перенаправить пользователя:
         <input type="hidden" name="_target_path" value="/account" />
@@ -16,3 +19,5 @@
 
     <input type="submit" name="login" />
 </form>
+    <div>or <a href="{{ path("_user_create") }}">Register</a></div>
+</div>

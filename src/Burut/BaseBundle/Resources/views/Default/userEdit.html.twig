@@ -1,0 +1,12 @@
+{% block content %}
+    Registration.<br/><br/>
+    Please enter your details:  <br/>
+    <form action="{{ path('_user_edit', {id:user.id}) }}" method="post" {{ form_enctype(form) }}>
+        {{ form_widget(form) }}
+
+        <input type="submit" />
+    </form>
+
+
+
+{% endblock %}

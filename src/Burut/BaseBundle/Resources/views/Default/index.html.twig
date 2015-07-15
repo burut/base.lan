@@ -2,5 +2,19 @@ This is {{ name }} page<br/>
 <br/>
 тут нужно будтт вывести спискк баз юзера<br/>
 <br/>
+<table>
+    {% for base in bases %}
+
+    <tr>
+        <td style="border-bottom:2px solid #000000; border-left:2px solid #000000;"> {{ base.id }} </td>
+        <td style="border-bottom:2px solid #000000; border-left:2px solid #000000;"> {{ base.user_id }} </td>
+        <td style="border-bottom:2px solid #000000; border-left:2px solid #000000;"> {{ base.title }} </td>
+        <td style="border-bottom:2px solid #000000; border-left:2px solid #000000;"> {{ base.color }} </td>
+        <td style="border-bottom:2px solid #000000; border-left:2px solid #000000;"> {{ base.keyField_id }}"</td>
+        <td style="border-bottom:2px solid #000000; border-left:2px solid #000000;"> {{ base.created_at }}</td>
+
+    </tr>
+    {% endfor %}
+</table>
 
 <a href="{{ path("_logout") }}">logout</a>
