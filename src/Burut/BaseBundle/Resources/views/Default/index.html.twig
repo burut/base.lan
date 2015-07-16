@@ -5,11 +5,12 @@
 <table>
     {% for base in bases %}
 
-        <td> {{ base.id }} </td>
-        <td> {{ base.userId }} </td>
+        {#<td> {{ base.id }} </td>#}
+        {#<td> {{ base.userId }} </td>#}
         <td> {{ base.title }} </td>
-        <td> {{ base.color }} </td>
-        <td> {{ base.keyFieldId }}"</td>
+        {#<td> {{ base.color }} </td>#}
+        <td> {{ base.keyFieldId }}</td>
+        <td style="border:2px solid #000000 ; background-color: {{  base.color }};">&nbsp;&nbsp;&nbsp;&nbsp;</td>
         {#<td> {{ base.createdAt }}</td>#}
 
     </tr>
