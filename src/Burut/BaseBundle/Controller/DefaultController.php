@@ -43,14 +43,12 @@ class DefaultController extends Controller
                 $userName[] = $user;
             }
         }
-//////////////////////
+
         $bases = $this->getDoctrine()
             ->getRepository('BurutBaseBundle:Base')
-            ->findAll();
-        if (!count($bases))
-        {
-            foreach ($this->bases as $row)
-            {
+            ->findByUser_id($user);
+        if (!count($bases)) {
+            foreach ($this->bases as $row) {
                 $base = new Base();
 
                 $base->setUserId($row["user_id"]);
@@ -60,14 +58,11 @@ class DefaultController extends Controller
 //                $base->setCreatedAt($row["created_at"]);
 
                 $em = $this->getDoctrine()->getEntityManager();
-                if ($userName->$id = $base->$UserId ) {
                 $em->persist($base);
                 $em->flush();
                 $bases[] = $base;
-
-            }}
+            }
         }
-
         var_dump($user);
         var_dump($bases);
 
