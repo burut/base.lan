@@ -63,9 +63,6 @@ class DefaultController extends Controller
                 $bases[] = $base;
             }
         }
-        var_dump($user);
-        var_dump($bases);
-
         return array("user" => $user, "bases" => $bases);
     }
 

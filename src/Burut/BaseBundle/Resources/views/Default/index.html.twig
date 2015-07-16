@@ -1,17 +1,16 @@
-This is {{ user.name }} {{ user.id }}page<br/>
+Это страничка Ваша страничка {{ user.name }}. <br/>
 <br/>
-тут нужно будтт вывести спискк баз юзера<br/>
+ Ваши базы<br/>
 <br/>
 <table>
     {% for base in bases %}
-        base №  {{  base.id }}
-    <tr>
-        <td style="border-bottom:2px solid #000000; border-left:2px solid #000000;"> {{ base.id }} </td>
-        <td style="border-bottom:2px solid #000000; border-left:2px solid #000000;"> {{ base.userId }} </td>
-        <td style="border-bottom:2px solid #000000; border-left:2px solid #000000;"> {{ base.title }} </td>
-        <td style="border-bottom:2px solid #000000; border-left:2px solid #000000;"> {{ base.color }} </td>
-        <td style="border-bottom:2px solid #000000; border-left:2px solid #000000;"> {{ base.keyFieldId }}"</td>
-        {#<td style="border-bottom:2px solid #000000; border-left:2px solid #000000;"> {{ base.createdAt }}</td>#}
+
+        <td> {{ base.id }} </td>
+        <td> {{ base.userId }} </td>
+        <td> {{ base.title }} </td>
+        <td> {{ base.color }} </td>
+        <td> {{ base.keyFieldId }}"</td>
+        {#<td> {{ base.createdAt }}</td>#}
 
     </tr>
     {% endfor %}
