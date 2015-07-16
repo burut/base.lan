@@ -28,7 +28,22 @@ class DefaultController extends Controller
     {
 
         $user = $this->getUser();
+        $userName = $this->getDoctrine()
+            ->getRepository('BurutBaseBundle:User')
+            ->findAll();
+        if (!count($userName)) {
+            foreach ($this->userName as $row) {
+                $userName = new userName();
 
+                $userName->setUserID($row["id"]);
+                $userName->setUserName($row["name"]);
+                $em = $this->getDoctrine()->getEntityManager();
+                $em->persist($user);
+                $em->flush();
+                $userName[] = $user;
+            }
+        }
+//////////////////////
         $bases = $this->getDoctrine()
             ->getRepository('BurutBaseBundle:Base')
             ->findAll();
@@ -38,24 +53,25 @@ class DefaultController extends Controller
             {
                 $base = new Base();
 
-                $base->setUser_id($row["user_id"]);
+                $base->setUserId($row["user_id"]);
                 $base->setTitle($row["title"]);
                 $base->setColor($row["color"]);
-                $base->setKeyField_id($row["keyField_id"]);
-                $base->setCreated_at($row["created_at"]);
+                $base->setKeyFieldId($row["keyField_id"]);
+//                $base->setCreatedAt($row["created_at"]);
 
                 $em = $this->getDoctrine()->getEntityManager();
+                if ($userName->$id = $base->$UserId ) {
                 $em->persist($base);
                 $em->flush();
                 $bases[] = $base;
 
-            }
+            }}
         }
 
         var_dump($user);
         var_dump($bases);
 
-        return array('name' => "index", "bases" => $bases);
+        return array("user" => $user, "bases" => $bases);
     }
 
 
