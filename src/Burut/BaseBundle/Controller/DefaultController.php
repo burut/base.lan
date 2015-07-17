@@ -26,31 +26,13 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-
         $user = $this->getUser();
-        $user = $this->getDoctrine()
-            ->getRepository('BurutBaseBundle:User')
-            ->find($user["id"]);
 
+        var_dump($user);
         $bases = $this->getDoctrine()
             ->getRepository('BurutBaseBundle:Base')
-            ->findByUser_id($user["id"]);
-        if (!count($bases)) {
-            foreach ($this->bases as $row) {
-                $base = new Base();
+            ->findByUser_id($user);
 
-                $base->setUserId($row["user_id"]);
-                $base->setTitle($row["title"]);
-                $base->setColor($row["color"]);
-                $base->setKeyFieldId($row["keyField_id"]);
-//                $base->setCreatedAt($row["created_at"]);
-
-                $em = $this->getDoctrine()->getEntityManager();
-                $em->persist($base);
-                $em->flush();
-                $bases[] = $base;
-            }
-        }
         return array("user" => $user, "bases" => $bases);
     }
 
