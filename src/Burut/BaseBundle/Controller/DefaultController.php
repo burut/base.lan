@@ -31,7 +31,7 @@ class DefaultController extends Controller
         var_dump($user);
         $bases = $this->getDoctrine()
             ->getRepository('BurutBaseBundle:Base')
-            ->findByUser_id($user);
+            ->findByUser_id($user->getid());
 
         return array("user" => $user, "bases" => $bases);
     }
