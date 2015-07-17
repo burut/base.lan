@@ -28,25 +28,13 @@ class DefaultController extends Controller
     {
 
         $user = $this->getUser();
-        $userName = $this->getDoctrine()
+        $user = $this->getDoctrine()
             ->getRepository('BurutBaseBundle:User')
-            ->findAll();
-        if (!count($userName)) {
-            foreach ($this->userName as $row) {
-                $userName = new userName();
-
-                $userName->setUserID($row["id"]);
-                $userName->setUserName($row["name"]);
-                $em = $this->getDoctrine()->getEntityManager();
-                $em->persist($user);
-                $em->flush();
-                $userName[] = $user;
-            }
-        }
+            ->find($user["id"]);
 
         $bases = $this->getDoctrine()
             ->getRepository('BurutBaseBundle:Base')
-            ->findByUser_id($user);
+            ->findByUser_id($user["id"]);
         if (!count($bases)) {
             foreach ($this->bases as $row) {
                 $base = new Base();
