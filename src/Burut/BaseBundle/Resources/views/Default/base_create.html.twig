@@ -1,4 +1,11 @@
+{% extends "BurutBaseBundle:Default:index.html.twig" %}
+
+
 {% block content %}
-111
+    <form action="{{ path('_base_edit', {id:base.id}) }}" method="post" {{ form_enctype(form) }}>
+        {{ form_widget(form) }}
+
+        <input type="submit" />
+    </form>
 
 {% endblock %}

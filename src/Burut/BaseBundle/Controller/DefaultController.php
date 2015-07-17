@@ -153,7 +153,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/base_edit", name="_base_edit")
+     * @Route("/base_create/{id}", name="_base_edit")
      * @Template()
      * @Security("has_role('ROLE_USER')")
      * @Template("BurutBaseBundle:Default:base_create.html.twig")
@@ -164,9 +164,10 @@ class DefaultController extends Controller
         $base = $em->getRepository('BurutBaseBundle:Base')->find($id);
 
         $form = $this->createFormBuilder($base)
-            ->add('email', 'text')
-            ->add('password', 'text')
-            ->add('name', 'text')
+            ->add('user_id', 'text')
+            ->add('title', 'text')
+            ->add('color', 'text')
+            ->add('keyfield_id', 'text')
             ->getForm();
         $form->handleRequest($request);
         if ($form->isValid()) {
@@ -176,7 +177,7 @@ class DefaultController extends Controller
             return $this->redirectToRoute('_home');
         }
         return array(
-            "user" => $base,
+            "base" => $base,
             "form" => $form->createView());
     }
 
