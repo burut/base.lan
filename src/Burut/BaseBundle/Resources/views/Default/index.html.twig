@@ -1,5 +1,7 @@
 Это страничка Ваша страничка {{ user.name }}. <br/>
 <br/>
+
+{% block content %}
  Ваши базы<br/>
 <br/>
 <table>
@@ -18,7 +20,7 @@
 </table>
 <br/><br/>
 <a style="background-color: yellow;" href="{{ path("_base_create") }}">+Add new base</a>
-
+{% endblock %}
 <br/><br/><br/><br/>
 
 <a href="{{ path("_logout") }}">logout</a>

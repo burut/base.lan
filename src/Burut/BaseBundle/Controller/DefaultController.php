@@ -129,4 +129,59 @@ class DefaultController extends Controller
             "user" => $user,
             "form" => $form->createView());
     }
+
+    /**
+     * @Route("/base_create", name="_base_create")
+     * @Template()
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function baseCreateAction()
+    {
+        $user = $this->getUser();
+        var_dump($user);
+        $base = new Base();
+        $base->setUserId($user->getid());
+        $base->setTitle("");
+        $base->setColor("");
+        $base->setKeyfieldId("");
+        $base->setCreatedAt(new \DateTime());
+        $em = $this->getDoctrine()->getEntityManager();
+        $em->persist($base);
+        $em->flush();
+        var_dump($base);
+        return $this->redirectToRoute('_base_edit', array('id'=>$base->getId()));
+    }
+
+    /**
+     * @Route("/base_edit", name="_base_edit")
+     * @Template()
+     * @Security("has_role('ROLE_USER')")
+     * @Template("BurutBaseBundle:Default:base_create.html.twig")
+     */
+    public function baseEditAction($id, Request $request)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        $base = $em->getRepository('BurutBaseBundle:Base')->find($id);
+
+        $form = $this->createFormBuilder($base)
+            ->add('email', 'text')
+            ->add('password', 'text')
+            ->add('name', 'text')
+            ->getForm();
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getEntityManager();
+            $em->persist($base);
+            $em->flush();
+            return $this->redirectToRoute('_home');
+        }
+        return array(
+            "user" => $base,
+            "form" => $form->createView());
+    }
+
+
+
+
+
 }
