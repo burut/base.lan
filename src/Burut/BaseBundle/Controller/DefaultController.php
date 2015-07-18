@@ -28,11 +28,12 @@ class DefaultController extends Controller
     {
         $user = $this->getUser();
 
-        var_dump($user);
+//        var_dump($user);
         $bases = $this->getDoctrine()
             ->getRepository('BurutBaseBundle:Base')
             ->findByUser_id($user->getid());
-
+        var_dump($user);
+        var_dump($bases);
         return array("user" => $user, "bases" => $bases);
     }
 
@@ -181,7 +182,22 @@ class DefaultController extends Controller
             "form" => $form->createView());
     }
 
+    /**
+     * @Route("/film_list/{id}", name="_film_list")
+     * @Template()
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function filmListAction($id, Request $request)
+    {
+        $user = $this->getUser();
 
+//        var_dump($user);
+        $bases = $this->getDoctrine()
+            ->getRepository('BurutBaseBundle:Base')
+            ->findByUser_id($user->getid());
+
+        return array("user" => $user, "bases" => $bases);
+    }
 
 
 

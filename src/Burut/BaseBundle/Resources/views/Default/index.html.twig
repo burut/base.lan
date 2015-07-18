@@ -12,20 +12,23 @@
 {% block content %}
  Ваши базы<br/>
 <br/>
-<table>
-    {% for base in bases %}
 
+    {% for base in bases %}
+    <a style="display: inline-block; width: 100px; height: 70px;
+        margin-left: 10px; border: 2px solid #000000;" href="{{ path("_film_list", {id: base.id}) }}">
         {#<td> {{ base.id }} </td>#}
         {#<td> {{ base.userId }} </td>#}
-        <td> {{ base.title }} </td>
+        <div> {{ base.title }} </div>
         {#<td> {{ base.color }} </td>#}
-        <td> {{ base.keyFieldId }}</td>
-        <td style="border:2px solid #000000 ; background-color: {{  base.color }};">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+        <div> {{ base.keyFieldId }}</div>
+        <div style="display: block; width: 30px; height: 20px;border:2px solid #000000;
+                background-color: {{  base.color }};"></div>
         {#<td> {{ base.createdAt }}</td>#}
 
-    </tr>
+    </a>
+
     {% endfor %}
-</table>
+
 <br/><br/>
 <a style="background-color: yellow;" href="{{ path("_base_create") }}">+Add new base</a>
 {% endblock %}
