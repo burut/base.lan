@@ -22,12 +22,20 @@ class BaseRow
     private $id;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="base_id", type="integer")
+     * @ORM\OneToMany(targetEntity="FieldValue", mappedBy="baseRow")
      */
-    private $baseId;
+    protected $fieldValues;
 
+    public function __construct()
+    {
+        $this->fieldValues = new ArrayCollection();
+    }
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Base", inversedBy="baseRows")
+     * @ORM\JoinColumn(name="base_id", referencedColumnName="id")
+     */
+    protected $base;
 
     /**
      * Get id
@@ -40,25 +48,58 @@ class BaseRow
     }
 
     /**
-     * Set baseId
+     * Add fieldValues
      *
-     * @param integer $baseId
+     * @param \Burut\BaseBundle\Entity\FieldValue $fieldValues
      * @return BaseRow
      */
-    public function setBaseId($baseId)
+    public function addFieldValue(\Burut\BaseBundle\Entity\FieldValue $fieldValues)
     {
-        $this->baseId = $baseId;
+        $this->fieldValues[] = $fieldValues;
 
         return $this;
     }
 
     /**
-     * Get baseId
+     * Remove fieldValues
      *
-     * @return integer 
+     * @param \Burut\BaseBundle\Entity\FieldValue $fieldValues
      */
-    public function getBaseId()
+    public function removeFieldValue(\Burut\BaseBundle\Entity\FieldValue $fieldValues)
     {
-        return $this->baseId;
+        $this->fieldValues->removeElement($fieldValues);
+    }
+
+    /**
+     * Get fieldValues
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getFieldValues()
+    {
+        return $this->fieldValues;
+    }
+
+    /**
+     * Set base
+     *
+     * @param \Burut\BaseBundle\Entity\Base $base
+     * @return BaseRow
+     */
+    public function setBase(\Burut\BaseBundle\Entity\Base $base = null)
+    {
+        $this->base = $base;
+
+        return $this;
+    }
+
+    /**
+     * Get base
+     *
+     * @return \Burut\BaseBundle\Entity\Base 
+     */
+    public function getBase()
+    {
+        return $this->base;
     }
 }

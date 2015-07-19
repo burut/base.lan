@@ -63,6 +63,16 @@ class BaseField
     protected $fieldType;
 
     /**
+     * @ORM\OneToMany(targetEntity="FieldValue", mappedBy="baseField")
+     */
+    protected $fieldValues;
+
+    public function __construct()
+    {
+        $this->fieldValues = new ArrayCollection();
+    }
+
+    /**
      * Get id
      *
      * @return integer 
@@ -208,5 +218,38 @@ class BaseField
     public function getFieldType()
     {
         return $this->fieldType;
+    }
+
+    /**
+     * Add fieldValues
+     *
+     * @param \Burut\BaseBundle\Entity\FieldValue $fieldValues
+     * @return BaseField
+     */
+    public function addFieldValue(\Burut\BaseBundle\Entity\FieldValue $fieldValues)
+    {
+        $this->fieldValues[] = $fieldValues;
+
+        return $this;
+    }
+
+    /**
+     * Remove fieldValues
+     *
+     * @param \Burut\BaseBundle\Entity\FieldValue $fieldValues
+     */
+    public function removeFieldValue(\Burut\BaseBundle\Entity\FieldValue $fieldValues)
+    {
+        $this->fieldValues->removeElement($fieldValues);
+    }
+
+    /**
+     * Get fieldValues
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getFieldValues()
+    {
+        return $this->fieldValues;
     }
 }

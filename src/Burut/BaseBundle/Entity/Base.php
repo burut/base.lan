@@ -61,12 +61,16 @@ class Base
      */
     protected $baseFields;
 
+    /**
+     * @ORM\OneToMany(targetEntity="BaseRow", mappedBy="base")
+     */
+    protected $baseRows;
+
     public function __construct()
     {
         $this->baseFields = new ArrayCollection();
+        $this->baseRows = new ArrayCollection();
     }
-
-
 
     /**
      * Get id
@@ -224,5 +228,38 @@ class Base
     public function getBaseFields()
     {
         return $this->baseFields;
+    }
+
+    /**
+     * Add baseRows
+     *
+     * @param \Burut\BaseBundle\Entity\BaseRow $baseRows
+     * @return Base
+     */
+    public function addBaseRow(\Burut\BaseBundle\Entity\BaseRow $baseRows)
+    {
+        $this->baseRows[] = $baseRows;
+
+        return $this;
+    }
+
+    /**
+     * Remove baseRows
+     *
+     * @param \Burut\BaseBundle\Entity\BaseRow $baseRows
+     */
+    public function removeBaseRow(\Burut\BaseBundle\Entity\BaseRow $baseRows)
+    {
+        $this->baseRows->removeElement($baseRows);
+    }
+
+    /**
+     * Get baseRows
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getBaseRows()
+    {
+        return $this->baseRows;
     }
 }
