@@ -24,9 +24,9 @@ class FieldValue
     /**
      * @var integer
      *
-     * @ORM\Column(name="base_record_id", type="integer")
+     * @ORM\Column(name="base_row_id", type="integer")
      */
-    private $baseRecordId;
+    private $baseRowId;
 
     /**
      * @var integer
@@ -38,7 +38,7 @@ class FieldValue
     /**
      * @var string
      *
-     * @ORM\Column(name="value", type="string", length=100)
+     * @ORM\Column(name="value", type="string", nullable=true)
      */
     private $value;
 
@@ -54,26 +54,26 @@ class FieldValue
     }
 
     /**
-     * Set baseRecordId
+     * Set baseRowId
      *
-     * @param integer $baseRecordId
+     * @param integer $baseRowId
      * @return FieldValue
      */
-    public function setBaseRecordId($baseRecordId)
+    public function setBaseRowId($baseRowId)
     {
-        $this->baseRecordId = $baseRecordId;
+        $this->baseRowId = $baseRowId;
 
         return $this;
     }
 
     /**
-     * Get baseRecordId
+     * Get baseRowId
      *
      * @return integer 
      */
-    public function getBaseRecordId()
+    public function getBaseRowId()
     {
-        return $this->baseRecordId;
+        return $this->baseRowId;
     }
 
     /**

@@ -45,7 +45,7 @@ class BaseField
     /**
      * @var string
      *
-     * @ORM\Column(name="config", type="string", length=100)
+     * @ORM\Column(name="config", type="text", nullable=true)
      */
     private $config;
 

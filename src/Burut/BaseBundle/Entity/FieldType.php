@@ -24,9 +24,9 @@ class FieldType
     /**
      * @var string
      *
-     * @ORM\Column(name="еtitle", type="string", length=100)
+     * @ORM\Column(name="title", type="string", length=100)
      */
-    private $еtitle;
+    private $title;
 
     /**
      * @var string
@@ -47,26 +47,26 @@ class FieldType
     }
 
     /**
-     * Set еtitle
+     * Set title
      *
-     * @param string $еtitle
+     * @param string $title
      * @return FieldType
      */
-    public function setеtitle($еtitle)
+    public function setTitle($title)
     {
-        $this->еtitle = $еtitle;
+        $this->title = $title;
 
         return $this;
     }
 
     /**
-     * Get еtitle
+     * Get title
      *
      * @return string 
      */
-    public function getеtitle()
+    public function getTitle()
     {
-        return $this->еtitle;
+        return $this->title;
     }
 
     /**

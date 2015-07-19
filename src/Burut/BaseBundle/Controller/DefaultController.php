@@ -28,12 +28,8 @@ class DefaultController extends Controller
     {
         $user = $this->getUser();
 
-//        var_dump($user);
-        $bases = $this->getDoctrine()
-            ->getRepository('BurutBaseBundle:Base')
-            ->findByUser_id($user->getid());
-        var_dump($user);
-        var_dump($bases);
+        $bases = $user->getBases();
+
         return array("user" => $user, "bases" => $bases);
     }
 
@@ -187,16 +183,18 @@ class DefaultController extends Controller
      * @Template()
      * @Security("has_role('ROLE_USER')")
      */
-    public function filmListAction($id, Request $request)
+    public function filmListAction($id, $base, Request $request)
     {
-        $user = $this->getUser();
+//        $base = $this->getBaseId();
 
-//        var_dump($user);
-        $bases = $this->getDoctrine()
-            ->getRepository('BurutBaseBundle:Base')
-            ->findByUser_id($user->getid());
+//        var_dump($base);
 
-        return array("user" => $user, "bases" => $bases);
+        $baseField = $this->getDoctrine()
+            ->getRepository('BurutBaseBundle:BaseField')
+            ->findByBase_id($base->getid());
+        var_dump($baseField);
+
+        return array("base" => $base, "basesField" => $baseField);
     }
 
 

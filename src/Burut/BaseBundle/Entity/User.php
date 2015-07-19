@@ -43,6 +43,16 @@ class User implements UserInterface
      */
     private $name;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Base", mappedBy="user")
+     */
+    protected $bases;
+
+    public function __construct()
+    {
+        $this->bases = new ArrayCollection();
+    }
+
 
     /**
      * Get id
@@ -144,4 +154,37 @@ class User implements UserInterface
         return $this->email;
     }
 
+
+    /**
+     * Add bases
+     *
+     * @param \Burut\BaseBundle\Entity\Base $bases
+     * @return User
+     */
+    public function addBase(\Burut\BaseBundle\Entity\Base $bases)
+    {
+        $this->bases[] = $bases;
+
+        return $this;
+    }
+
+    /**
+     * Remove bases
+     *
+     * @param \Burut\BaseBundle\Entity\Base $bases
+     */
+    public function removeBase(\Burut\BaseBundle\Entity\Base $bases)
+    {
+        $this->bases->removeElement($bases);
+    }
+
+    /**
+     * Get bases
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getBases()
+    {
+        return $this->bases;
+    }
 }

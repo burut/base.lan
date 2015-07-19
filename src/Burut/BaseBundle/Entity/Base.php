@@ -24,13 +24,6 @@ class Base
     /**
      * @var string
      *
-     * @ORM\Column(name="user_id", type="integer")
-     */
-    private $userId;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="title", type="string", length=50)
      */
     private $title;
@@ -58,6 +51,13 @@ class Base
 
 
     /**
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="bases")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    protected $user;
+
+
+    /**
      * Get id
      *
      * @return integer 
@@ -65,29 +65,6 @@ class Base
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set userId
-     *
-     * @param integer $userId
-     * @return Base
-     */
-    public function setUserId($userId)
-    {
-        $this->userId = $userId;
-
-        return $this;
-    }
-
-    /**
-     * Get userId
-     *
-     * @return integer
-     */
-    public function getUserId()
-    {
-        return $this->userId;
     }
 
     /**
@@ -180,5 +157,28 @@ class Base
     public function getCreatedAt()
     {
         return $this->createdAt;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \Burut\BaseBundle\Entity\User $user
+     * @return Base
+     */
+    public function setUser(\Burut\BaseBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \Burut\BaseBundle\Entity\User 
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }
