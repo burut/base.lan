@@ -27,7 +27,6 @@ class DefaultController extends Controller
     public function indexAction()
     {
         $user = $this->getUser();
-
         $bases = $user->getBases();
 
         return array("user" => $user, "bases" => $bases);
@@ -179,22 +178,36 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/film_list/{id}", name="_film_list")
+     * @Route("/base_show/{id}", name="_base_show")
      * @Template()
      * @Security("has_role('ROLE_USER')")
      */
-    public function filmListAction($id, $base, Request $request)
+    public function baseShowAction($id, Request $request)
     {
-//        $base = $this->getBaseId();
+        $user = $this->getUser();
 
-//        var_dump($base);
+//        // Способ 1 - выбираем только по id базы, а потом уже проверяем юзера на пхп
+//        $base = $this->getDoctrine()->getRepository("BurutBaseBundle:Base")->find($id);
+//        if (!$base || $base->getUser() != $user) {
+//            die("base not found");
+//        }
 
-        $baseField = $this->getDoctrine()
-            ->getRepository('BurutBaseBundle:BaseField')
-            ->findByBase_id($base->getid());
-        var_dump($baseField);
+        $base = $this->getDoctrine()->getRepository("BurutBaseBundle:Base")
+            ->findOneBy(["id" => $id, "user" => $user]);
+        if (!$base) {
+            die("base not found");
+        }
 
-        return array("base" => $base, "basesField" => $baseField);
+        $baseFields = $base->getBaseFields();
+
+        $values = [];
+        foreach ($base->getBaseRows() as $row) { // получаем массив строк нужной базы
+            foreach ($row->getFieldValues() as $fieldValue) {  // получаем значения полей строки
+                $values[$row->getId()][$fieldValue->getBaseField()->getId()] = $fieldValue->getValue();
+            }
+        }
+
+        return ["base" => $base, "fields" => $baseFields, "values" => $values];
     }
 
 

@@ -15,7 +15,7 @@
 
     {% for base in bases %}
     <a style="display: inline-block; width: 100px; height: 70px;
-        margin-left: 10px; border: 2px solid #000000;" href="{{ path("_film_list", {id: base.id}) }}">
+        margin-left: 10px; border: 2px solid #000000;" href="{{ path("_base_show", {id: base.id}) }}">
         {#<td> {{ base.id }} </td>#}
         {#<td> {{ base.userId }} </td>#}
         <div> {{ base.title }} </div>

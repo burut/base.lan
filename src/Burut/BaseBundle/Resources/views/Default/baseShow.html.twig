@@ -1,0 +1,32 @@
+
+<b>{{ base.user.name }}</b>, your database <b>{{ base.title }}</b>:
+<br/><br>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>id</th>
+        {% for field in fields %}
+            {% if field.isShow %}
+            <th>{{ field.title }}</th>
+            {% endif %}
+        {% endfor %}
+        <th colspan="3">Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+        {% for row in base.baseRows %}
+        <tr>
+            <td>{{ row.id }}</td>
+            {% for field in fields %}
+                {% if field.isShow %}
+                <td>{{ values[row.id][field.id] }}</td>
+                {% endif %}
+            {% endfor %}
+            <td>View</td>
+            <td>Edit</td>
+            <td>Delete</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
