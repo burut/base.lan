@@ -35,6 +35,16 @@ class FieldType
      */
     private $code;
 
+    /**
+     * @ORM\OneToMany(targetEntity="BaseField", mappedBy="fieldType")
+     */
+    protected $baseFields;
+
+    public function __construct()
+    {
+        $this->baseFields = new ArrayCollection();
+    }
+
 
     /**
      * Get id
@@ -90,5 +100,38 @@ class FieldType
     public function getCode()
     {
         return $this->code;
+    }
+
+    /**
+     * Add baseFields
+     *
+     * @param \Burut\BaseBundle\Entity\BaseField $baseFields
+     * @return FieldType
+     */
+    public function addBaseField(\Burut\BaseBundle\Entity\BaseField $baseFields)
+    {
+        $this->baseFields[] = $baseFields;
+
+        return $this;
+    }
+
+    /**
+     * Remove baseFields
+     *
+     * @param \Burut\BaseBundle\Entity\BaseField $baseFields
+     */
+    public function removeBaseField(\Burut\BaseBundle\Entity\BaseField $baseFields)
+    {
+        $this->baseFields->removeElement($baseFields);
+    }
+
+    /**
+     * Get baseFields
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getBaseFields()
+    {
+        return $this->baseFields;
     }
 }

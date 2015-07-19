@@ -22,25 +22,11 @@ class BaseField
     private $id;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="base_id", type="integer")
-     */
-    private $baseId;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=50)
      */
     private $title;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="type_id", type="integer")
-     */
-    private $typeId;
 
     /**
      * @var string
@@ -65,6 +51,18 @@ class BaseField
 
 
     /**
+     * @ORM\ManyToOne(targetEntity="base", inversedBy="baseFields")
+     * @ORM\JoinColumn(name="base_id", referencedColumnName="id")
+     */
+    protected $base;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="FieldType", inversedBy="baseFields")
+     * @ORM\JoinColumn(name="type_id", referencedColumnName="id")
+     */
+    protected $fieldType;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -72,29 +70,6 @@ class BaseField
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set baseId
-     *
-     * @param integer $baseId
-     * @return BaseField
-     */
-    public function setBaseId($baseId)
-    {
-        $this->baseId = $baseId;
-
-        return $this;
-    }
-
-    /**
-     * Get baseId
-     *
-     * @return integer 
-     */
-    public function getBaseId()
-    {
-        return $this->baseId;
     }
 
     /**
@@ -118,29 +93,6 @@ class BaseField
     public function getTitle()
     {
         return $this->title;
-    }
-
-    /**
-     * Set typeId
-     *
-     * @param integer $typeId
-     * @return BaseField
-     */
-    public function setTypeId($typeId)
-    {
-        $this->typeId = $typeId;
-
-        return $this;
-    }
-
-    /**
-     * Get typeId
-     *
-     * @return integer 
-     */
-    public function getTypeId()
-    {
-        return $this->typeId;
     }
 
     /**
@@ -210,5 +162,51 @@ class BaseField
     public function getIsRequiered()
     {
         return $this->isRequiered;
+    }
+
+    /**
+     * Set base
+     *
+     * @param \Burut\BaseBundle\Entity\base $base
+     * @return BaseField
+     */
+    public function setBase(\Burut\BaseBundle\Entity\base $base = null)
+    {
+        $this->base = $base;
+
+        return $this;
+    }
+
+    /**
+     * Get base
+     *
+     * @return \Burut\BaseBundle\Entity\base 
+     */
+    public function getBase()
+    {
+        return $this->base;
+    }
+
+    /**
+     * Set fieldType
+     *
+     * @param \Burut\BaseBundle\Entity\FieldType $fieldType
+     * @return BaseField
+     */
+    public function setFieldType(\Burut\BaseBundle\Entity\FieldType $fieldType = null)
+    {
+        $this->fieldType = $fieldType;
+
+        return $this;
+    }
+
+    /**
+     * Get fieldType
+     *
+     * @return \Burut\BaseBundle\Entity\FieldType 
+     */
+    public function getFieldType()
+    {
+        return $this->fieldType;
     }
 }
