@@ -210,6 +210,42 @@ class DefaultController extends Controller
         return ["base" => $base, "fields" => $baseFields, "values" => $values];
     }
 
+    /**
+     * @Route("/view_record/{id}", name="_view_record")
+     * @Template()
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function viewRecordAction($id, Request $request)
+    {
+        $user = $this->getUser();
+        $baseRow = $this->getDoctrine()->getRepository("BurutBaseBundle:BaseRow")
+            ->findOneBy(["id" => $id]);
+        $base = $baseRow->getBase();
+//        var_dump($base->getUser());
+        if ($user != $base->getUser()) {
+            die("user not found");
+        }
+        if (!$base) {
+            die("base not found");
+        }
+        $fieldValues = $baseRow->getFieldValues();
+        $fields = $this->getDoctrine()->getRepository("BurutBaseBundle:BaseField")
+            ->findOneBy(["title" => $id]);
 
+        $values = [];
+        foreach ($baseRow->getFieldValues() as $fieldValue) {  // получаем значения полей строки
+            $values[$baseRow->getId()][$fieldValue->getBaseField()->getId()] = $fieldValue->getValue();
+        }
 
+        $titleValues = [];
+//        foreach ($baseRow->getFieldValues()->getBaseField()->getTitle() as $fieldValue) {  // получаем значения полей строки
+//            $values[$baseRow->getId()][$fieldValue->getBaseField()->getId()] = $fieldValue->getValue();
+//    }
+//    var_dump($fieldValues);
+        var_dump($values);
+        var_dump($fields);
+
+        return ["base" => $base, "fields" => $fields, "values" => $values];
+
+    }
 }
