@@ -1,0 +1,30 @@
+
+<div style="padding-left: 50px; padding-top: 50px;">
+    <b>{{ base.title }}</b> - delete record
+    <div style="padding-left: 30px; padding-top: 30px;">
+        You sure to delete this record?<br><br>
+        <table>
+            <tr>
+                <td style="min-width: 70px; height: 30px;">id:</td>
+                <td>{{ id }}</td>
+            </tr>
+            <tr>
+                <td>title:</td>
+                <td style="min-width: 70px; height: 30px;">{{ values.title }}</td>
+            </tr>
+        </table>
+
+
+
+        <a href="{{ path("_base_show", {id: base.id}) }}">Back to list</a>
+
+
+
+
+
+
+
+
+
+    </div>
+</div>

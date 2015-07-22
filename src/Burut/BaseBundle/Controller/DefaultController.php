@@ -19,6 +19,8 @@ class DefaultController extends Controller
 {
     public $text;
 
+    public $confirm = 0;
+
     /**
      * @Route("/", name="_home")
      * @Template()
@@ -233,7 +235,49 @@ class DefaultController extends Controller
             $values[$fieldValue->getBaseField()->getTitle()] = $fieldValue->getValue();
         }
         $baseRowId = $baseRow->getId();
-//        var_dump($base);
+
         return ["base" => $base, "values" => $values, "baseRowId" => $baseRowId];
+    }
+
+
+    /**
+     * @Route("/record_delete/{id}/{confirm}", name="_record_delete")
+     * @Template()
+     * @Security("has_role('ROLE_USER')")
+     */
+
+
+    public function recordDeleteAction($id, $confirm=0)
+    {
+        var_dump($id);
+        var_dump($confirm);
+
+        $user = $this->getUser();
+        $baseRow = $this->getDoctrine()->getRepository("BurutBaseBundle:BaseRow")
+            ->findOneBy(["id" => $id]);
+        $base = $baseRow->getBase();
+        if ($user != $base->getUser()) {
+            die("user not found");
+        }
+        if (!$base) {
+            die("base not found");
+        }
+        $values = [];
+        foreach ($baseRow->getFieldValues() as $fieldValue) {  // получаем значения полей строки
+            $values[$fieldValue->getBaseField()->getTitle()] = $fieldValue->getValue();
+        }
+        $baseRowId = $baseRow->getId();
+        return ["id" => $id, "base" => $base, "values" => $values, "baseRowId" => $baseRowId];
+//        $em = $this->getDoctrine()->getEntityManager();
+//        $furn = $em->getRepository('Burut\Bundle\MenuBundle\Entity\Furnit')->find($id);
+//
+//        if (!$furn) {
+//            throw $this->createNotFoundException('No furniture found for id '.$id);
+//        }
+//
+//        $em->remove($furn);
+//        $em->flush();
+//
+//        return $this->redirectToRoute('_furn_list');
     }
 }
