@@ -1,33 +1,21 @@
+<div style="padding-left: 50px; padding-top: 50px;">
+<b>{{ base.title }}</b> - view record
+<br/></br>
 
-<b>{{ base.user.name }}</b>, your database <b>{{ base.title }}</b>:
-<br/><br>
-
-<table border="1">
-    <thead>
-    <tr>
-        <th>id</th>
-        {% for field in fields %}
-            {% if field.isShow %}
-            <th>{{ field }}</th>
-            {% endif %}
-        {% endfor %}
-        <th colspan="3">Actions</th>
-    </tr>
-    </thead>
-    <tbody>
-        {% for row in base.baseRows %}
+<table>
         <tr>
-            <td>{{ row.id }}</td>
-            {% for field in fields %}
-                {% if field.isShow %}
-                   <td>{{ values[row.id][field.id] }}</td>
-                {% endif %}
-            {% endfor %}
-            {#vardump {values.id}#}
-            <td><a href="{{ path("_view_record", {id: row.id}) }}">View</a></td>
-            <td>Edit</td>
-            <td>Delete</td>
+            <td style="min-width: 70px; height: 30px;">id</td>
+            <td>{{ baseRowId }}</td>
         </tr>
-        {% endfor %}
-    </tbody>
+    {% for key, value in values %}
+         <tr>
+            <td style="min-width: 70px; height: 30px;">{{ key }}</td>
+            <td>{{ value }}</td>
+         </tr>
+    {% endfor %}
 </table>
+    <br/></br>
+    <a href="">Edit</a>&nbsp&nbsp&nbsp&nbsp&nbsp
+    {#<a href="{{ path("_record_delete", {id: baseRowId}) }}">Delete</a>&nbsp&nbsp&nbsp&nbsp&nbsp#}
+    <a href="{{ path("_base_show", {id: base.id}) }}">Back to list</a>
+</div>

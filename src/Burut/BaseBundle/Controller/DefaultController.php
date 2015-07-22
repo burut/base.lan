@@ -228,24 +228,12 @@ class DefaultController extends Controller
         if (!$base) {
             die("base not found");
         }
-        $fieldValues = $baseRow->getFieldValues();
-        $fields = $this->getDoctrine()->getRepository("BurutBaseBundle:BaseField")
-            ->findOneBy(["title" => $id]);
-
         $values = [];
         foreach ($baseRow->getFieldValues() as $fieldValue) {  // получаем значения полей строки
-            $values[$baseRow->getId()][$fieldValue->getBaseField()->getId()] = $fieldValue->getValue();
+            $values[$fieldValue->getBaseField()->getTitle()] = $fieldValue->getValue();
         }
-
-        $titleValues = [];
-//        foreach ($baseRow->getFieldValues()->getBaseField()->getTitle() as $fieldValue) {  // получаем значения полей строки
-//            $values[$baseRow->getId()][$fieldValue->getBaseField()->getId()] = $fieldValue->getValue();
-//    }
-//    var_dump($fieldValues);
-        var_dump($values);
-        var_dump($fields);
-
-        return ["base" => $base, "fields" => $fields, "values" => $values];
-
+        $baseRowId = $baseRow->getId();
+//        var_dump($base);
+        return ["base" => $base, "values" => $values, "baseRowId" => $baseRowId];
     }
 }

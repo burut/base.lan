@@ -12,6 +12,13 @@ security:
             logout:
                 path:   /logout
                 target: /
+            remember_me:
+                key:      "%secret%"
+                lifetime: 31536000 # 365 days in seconds
+                path:     /
+                domain:  ".%router.request_context.host%" # Defaults to the current domain from $_SERVER
+                always_remember_me: true
+
 
     providers:
         our_db_provider:
