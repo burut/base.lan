@@ -290,9 +290,18 @@ class DefaultController extends Controller
     public function editRecordAction($id, Request $request)
     {
         $user = $this->getUser();
-        $baseRow = $this->getDoctrine()->getRepository("BurutBaseBundle:BaseRow")
-            ->findOneBy(["id" => $id]);
+        $em = $this->getDoctrine()->getEntityManager();
+        $baseRow = $em->getRepository("BurutBaseBundle:BaseRow")->find($id);
         $base = $baseRow->getBase();
+        $editRecordArray = [];
+        foreach ($baseRow->getFieldValues() as $fieldValue){
+            $editRecordArray[$fieldValue->getId()] = ["title" => "aaa", "type" => "bbb", "config" => null];
+        }
+
+        var_dump($editRecordArray);
+
+
+
         if ($user != $base->getUser()) {
             die("user not found");
         }
@@ -301,7 +310,7 @@ class DefaultController extends Controller
         }
         $values = [];
         foreach ($baseRow->getFieldValues() as $fieldValue) {  // получаем значения полей строки
-            $values[$fieldValue->getBaseField()->getTitle()] = $fieldValue->getValue();
+            $values[$fieldValue->getBaseField()->getTitle()] = [$fieldValue->getValue()];
         }
         $baseRowId = $baseRow->getId();
 
