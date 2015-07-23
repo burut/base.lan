@@ -22,7 +22,7 @@ class BaseRow
     private $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="FieldValue", mappedBy="baseRow")
+     * @ORM\OneToMany(targetEntity="FieldValue", mappedBy="baseRow", cascade={"persist", "remove"})
      */
     protected $fieldValues;
 

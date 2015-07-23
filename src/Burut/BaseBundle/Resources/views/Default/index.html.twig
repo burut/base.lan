@@ -1,13 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-    {#{% block title %}Main page{% endblock %}#}
-    {#<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>#}
-    {#{% block js %}{% endblock %}#}
-</head>
-<body>
-{#Это страничка Ваша страничка {{ user.name }}. <br/>#}
-<br/>
+{% extends "@BurutBase/layout.html.twig" %}
+
+    {% block title %}Main page{% endblock %}
 
 {% block content %}
  Ваши базы<br/>
@@ -32,8 +25,3 @@
 <br/><br/>
 <a style="background-color: yellow;" href="{{ path("_base_create") }}">+Add new base</a>
 {% endblock %}
-<br/><br/><br/><br/>
-
-<a href="{{ path("_logout") }}">logout</a>
-</body>
-</html>

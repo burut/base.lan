@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% block title %}{% endblock %}
+    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+    {% block js %}{% endblock %}
+</head>
+<body>
+
+{% block header %}
+<div id="header">
+    Logged as {{ user.name }}.
+    <a href="{{ path("_logout") }}">Logout</a>
+</div>
+{% endblock %}
+
+{% block content %}{% endblock %}
+
+{% block footer %}
+<div id="footer">
+    (c) 2015 yo!
+</div>
+{% endblock %}
+
+</body>
+</html>

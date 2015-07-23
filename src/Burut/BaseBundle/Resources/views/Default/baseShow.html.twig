@@ -1,3 +1,8 @@
+{% extends "@BurutBase/layout.html.twig" %}
+
+{% set user = base.user %}
+
+{% block content %}
 
 <b>{{ base.user.name }}</b>, your database <b>{{ base.title }}</b>:
 <br/><br>
@@ -25,9 +30,10 @@
             {% endfor %}
             {#vardump {values.id}#}
             <td><a href="{{ path("_view_record", {id: row.id}) }}">View</a></td>
-            <td>Edit</td>
-            <td>Delete</td>
+            <td><a href="{{ path("_edit_record", {id: row.id}) }}">Edit</a></td>
+            <td><a href="{{ path("_record_delete", {id: row.id}) }}">Delete</a></td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
+{% endblock %}

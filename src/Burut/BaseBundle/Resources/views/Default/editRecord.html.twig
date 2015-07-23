@@ -6,7 +6,7 @@
 
 {% block content %}
 <div style="padding-left: 50px; padding-top: 50px;">
-<b>{{ base.title }}</b> - view record
+<b>{{ base.title }}</b> - edit record
 <br/></br>
 
 <table>
@@ -22,8 +22,6 @@
     {% endfor %}
 </table>
     <br/></br>
-    <a href="{{ path("_edit_record", {id: baseRowId}) }}">Edit</a>&nbsp&nbsp&nbsp&nbsp&nbsp
-    <a href="{{ path("_record_delete", {id: baseRowId}) }}">Delete</a>&nbsp&nbsp&nbsp&nbsp&nbsp
-    <a href="{{ path("_base_show", {id: base.id}) }}">Back to list</a>
+    <a href="{{ path("_base_show", {id: base.id}) }}">Back to list</a>&nbsp&nbsp&nbsp&nbsp&nbsp
 </div>
 {% endblock %}

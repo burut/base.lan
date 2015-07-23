@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Burut\BaseBundle\Entity\User;
 use Burut\BaseBundle\Entity\Base;
 use Burut\BaseBundle\Entity\BaseField;
-
+use Doctrine\Common\Collections\ArrayCollection;
 
 
 class DefaultController extends Controller
@@ -136,7 +136,6 @@ class DefaultController extends Controller
     public function baseCreateAction()
     {
         $user = $this->getUser();
-        var_dump($user);
         $base = new Base();
         $base->setUserId($user->getid());
         $base->setTitle("");
@@ -146,7 +145,6 @@ class DefaultController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
         $em->persist($base);
         $em->flush();
-        var_dump($base);
         return $this->redirectToRoute('_base_edit', array('id'=>$base->getId()));
     }
 
@@ -223,7 +221,6 @@ class DefaultController extends Controller
         $baseRow = $this->getDoctrine()->getRepository("BurutBaseBundle:BaseRow")
             ->findOneBy(["id" => $id]);
         $base = $baseRow->getBase();
-//        var_dump($base->getUser());
         if ($user != $base->getUser()) {
             die("user not found");
         }
@@ -249,9 +246,49 @@ class DefaultController extends Controller
 
     public function recordDeleteAction($id, $confirm=0)
     {
-        var_dump($id);
-        var_dump($confirm);
+        $user = $this->getUser();
+        $em = $this->getDoctrine()->getEntityManager();
+        $baseRow = $em->getRepository("BurutBaseBundle:BaseRow")->find($id);
+        $base = $baseRow->getBase();
 
+        if (!$base || $base->getUser() != $user) {
+            die("base not found");
+        }
+
+        if ($confirm == 1) {
+            $em->remove($baseRow);
+            $em->flush();
+            return $this->redirectToRoute('_base_show', array('id'=>$base->getId()));
+        }
+
+        $values = [];
+        foreach ($baseRow->getFieldValues() as $fieldValue) {  // получаем значения полей строки
+            $values[$fieldValue->getBaseField()->getTitle()] = $fieldValue->getValue();
+        }
+        $baseRowId = $baseRow->getId();
+
+
+        return ["id" => $id, "base" => $base, "values" => $values, "baseRowId" => $baseRowId];
+//        $em = $this->getDoctrine()->getEntityManager();
+//        $furn = $em->getRepository('Burut\Bundle\MenuBundle\Entity\Furnit')->find($id);
+//
+//        if (!$furn) {
+//            throw $this->createNotFoundException('No furniture found for id '.$id);
+//        }
+//
+//        $em->remove($furn);
+//        $em->flush();
+//
+//        return $this->redirectToRoute('_furn_list');
+    }
+
+    /**
+     * @Route("/edit_record/{id}", name="_edit_record")
+     * @Template()
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function editRecordAction($id, Request $request)
+    {
         $user = $this->getUser();
         $baseRow = $this->getDoctrine()->getRepository("BurutBaseBundle:BaseRow")
             ->findOneBy(["id" => $id]);
@@ -267,17 +304,7 @@ class DefaultController extends Controller
             $values[$fieldValue->getBaseField()->getTitle()] = $fieldValue->getValue();
         }
         $baseRowId = $baseRow->getId();
-        return ["id" => $id, "base" => $base, "values" => $values, "baseRowId" => $baseRowId];
-//        $em = $this->getDoctrine()->getEntityManager();
-//        $furn = $em->getRepository('Burut\Bundle\MenuBundle\Entity\Furnit')->find($id);
-//
-//        if (!$furn) {
-//            throw $this->createNotFoundException('No furniture found for id '.$id);
-//        }
-//
-//        $em->remove($furn);
-//        $em->flush();
-//
-//        return $this->redirectToRoute('_furn_list');
+
+        return ["base" => $base, "values" => $values, "baseRowId" => $baseRowId];
     }
 }

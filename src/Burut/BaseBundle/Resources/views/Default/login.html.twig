@@ -1,7 +1,11 @@
+{% extends "@BurutBase/layout.html.twig" %}
+
+{% block header %}{% endblock %}
+
 {#{% if error %}#}
     {#<div>{{ error.message }}</div>#}
 {#{% endif %}#}
-
+{% block content %}
 <div style="text-align: center; padding-top: 40px;">Private Base</div>
 
 <div style="text-align: center; padding-top: 40px;">
@@ -21,3 +25,4 @@
 </form>
     <div>or <a href="{{ path("_user_create") }}">Register</a></div>
 </div>
+{% endblock %}
