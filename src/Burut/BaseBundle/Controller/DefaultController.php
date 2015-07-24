@@ -311,7 +311,7 @@ class DefaultController extends Controller
             }
             $em->persist($fieldValue);
             $em->flush();
-            return $this->redirectToRoute('_edit_record');
+            return $this->redirectToRoute ('_edit_record', array("id" => $baseRow->getId()));
         }
 
         $editRecordArray = [];
@@ -329,4 +329,60 @@ class DefaultController extends Controller
 
         return ["base" => $base, "editRecordArray" => $editRecordArray, "baseRowId" => $baseRowId]; // "values" => $values,
     }
+    /**
+     * @Route("/create_record", name="_create_record")
+     * @Template()
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function createRecordAction()
+    {
+        $record = new Record();
+        $record->setField("");
+        $record->setValue("");
+        $record->setType("");
+        $record->setConfig("");
+        $em = $this->getDoctrine()->getEntityManager();
+        $em->persist($record);
+        $em->flush();
+
+//        $em = $this->getDoctrine()->getEntityManager();
+//        $baseRow = $em->getRepository("BurutBaseBundle:BaseRow")->find($id);
+//        $user = $this->getUser();
+//        $base = $baseRow->getBase();
+//        if ($user != $base->getUser()) {
+//            die("user not found");
+//        }
+//        if (!$base) {
+//            die("base not found");
+//        }
+
+//        if ($request->getMethod() == "POST") {
+//            $fields = $request->request->all();
+//
+//            foreach ($baseRow->getFieldValues() as $fieldValue) {
+//                if (isset($fields[$fieldValue->getId()])) {
+//                    $value = $fields[$fieldValue->getId()];
+//                    $fieldValue->setValue(trim($value));
+//                }
+//            }
+//            $em->persist($fieldValue);
+//            $em->flush();
+//            return $this->redirectToRoute ('_edit_record', array("id" => $baseRow->getId()));
+//        }
+
+//        $editRecordArray = [];
+//        foreach ($baseRow->getFieldValues() as $fieldValue) {
+//            $config = str_replace("\r", "", $fieldValue->getBaseField()->getConfig()); // заменить левый перевод строки \r на пустой символ
+//
+//            $editRecordArray[$fieldValue->getId()] = [
+//                "field" => $fieldValue->getBaseField()->getTitle(),
+//                "value" => $fieldValue->getValue(),
+//                "type" => $fieldValue->getBaseField()->getFieldType()->getCode(),
+//                "config" => $config ? explode("\n", $config) : null
+//            ];
+//        }
+//        $baseRowId = $baseRow->getId();
+
+        return $this->redirectToRoute('_client_edit', array('id'=>$record->getId()));    }
+
 }
