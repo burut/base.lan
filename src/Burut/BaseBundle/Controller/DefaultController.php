@@ -295,7 +295,10 @@ class DefaultController extends Controller
         $base = $baseRow->getBase();
         $editRecordArray = [];
         foreach ($baseRow->getFieldValues() as $fieldValue){
-            $editRecordArray[$fieldValue->getId()] = ["title" => "aaa", "type" => "bbb", "config" => null];
+            $editRecordArray[$fieldValue->getId()] = ["field" => $fieldValue->getBaseField()->getTitle(),
+                "value" => $fieldValue->getValue(),
+                "type" => $fieldValue->getBaseField()->getFieldType()->getCode(),
+                "config" => ($fieldValue->getBaseField()->getConfig() == null) ? $fieldValue->getBaseField()->getConfig() : (explode( "\n", $fieldValue->getBaseField()->getConfig()))];
         }
 
         var_dump($editRecordArray);
