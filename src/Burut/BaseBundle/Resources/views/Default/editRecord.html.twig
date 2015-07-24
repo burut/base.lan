@@ -14,10 +14,25 @@
             <td style="min-width: 70px; height: 30px;">id</td>
             <td>{{ baseRowId }}</td>
         </tr>
-    {% for key, value in values %}
+    {% for key, editRecord in editRecordArray %}
          <tr>
-            <td style="min-width: 70px; height: 30px;">{{ key }}</td>
-            <td>{{ value }}</td>
+            <td style="min-width: 70px; height: 30px; vertical-align: middle;">{{ editRecord.field }}</td>
+            <td style="min-width: 70px; height: 30px; vertical-align: middle;">
+                <form>
+                    {% if editRecord.type == "CH" %}
+                        <input type="checkbox" value="{{ editRecord.value }}">
+                    {% elseif editRecord.type == "LIST" %}
+                        <select>
+                            {% for select in editRecord.config %}
+                                <option>{{ select }}</option>
+                            {% endfor %}
+                        </select>
+                    {% else %}
+                        <input type="text" value="{{ editRecord.value }}">
+                    {% endif %}
+                </form>
+            </td>
+            {#{% endfor %}#}
          </tr>
     {% endfor %}
 </table>

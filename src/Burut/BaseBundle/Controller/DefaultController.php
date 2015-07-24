@@ -300,23 +300,19 @@ class DefaultController extends Controller
                 "type" => $fieldValue->getBaseField()->getFieldType()->getCode(),
                 "config" => ($fieldValue->getBaseField()->getConfig() == null) ? $fieldValue->getBaseField()->getConfig() : (explode( "\n", $fieldValue->getBaseField()->getConfig()))];
         }
-
-        var_dump($editRecordArray);
-
-
-
+//        var_dump($editRecordArray);
         if ($user != $base->getUser()) {
             die("user not found");
         }
         if (!$base) {
             die("base not found");
         }
-        $values = [];
-        foreach ($baseRow->getFieldValues() as $fieldValue) {  // получаем значения полей строки
-            $values[$fieldValue->getBaseField()->getTitle()] = [$fieldValue->getValue()];
-        }
+//        $values = [];
+//        foreach ($baseRow->getFieldValues() as $fieldValue) {  // получаем значения полей строки
+//            $values[$fieldValue->getBaseField()->getTitle()] = [$fieldValue->getValue()];
+//        }
         $baseRowId = $baseRow->getId();
 
-        return ["base" => $base, "values" => $values, "baseRowId" => $baseRowId];
+        return ["base" => $base, "editRecordArray" => $editRecordArray, "baseRowId" => $baseRowId]; // "values" => $values,
     }
 }
