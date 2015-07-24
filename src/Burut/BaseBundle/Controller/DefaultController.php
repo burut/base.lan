@@ -2,6 +2,7 @@
 
 namespace Burut\BaseBundle\Controller;
 
+use Burut\BaseBundle\Entity\BaseRow;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -336,13 +337,15 @@ class DefaultController extends Controller
      */
     public function createRecordAction()
     {
-        $record = new Record();
-        $record->setField("");
-        $record->setValue("");
-        $record->setType("");
-        $record->setConfig("");
+//        $em = $this->getDoctrine()->getEntityManager();
+//        $baseRow = $em->getRepository("BurutBaseBundle:BaseRow")->find($id);
+//        $user = $this->getUser();
+//        $base = $baseRow->getBase();
+
+        $baseRow = new BaseRow();
+        $baseRow->setBaseId($base->getId());
         $em = $this->getDoctrine()->getEntityManager();
-        $em->persist($record);
+        $em->persist($baseRow);
         $em->flush();
 
 //        $em = $this->getDoctrine()->getEntityManager();
@@ -383,6 +386,6 @@ class DefaultController extends Controller
 //        }
 //        $baseRowId = $baseRow->getId();
 
-        return $this->redirectToRoute('_client_edit', array('id'=>$record->getId()));    }
+        return $this->redirectToRoute('_edit_record', array('id'=>$baseRow->getId()));    }
 
 }
