@@ -161,7 +161,7 @@ class DefaultController extends Controller
 
         $em = $this->getDoctrine()->getEntityManager();
         $base = $em->getRepository('BurutBaseBundle:Base')->find($id);
-
+        $baseField = $base->getBaseFields();
         $form = $this->createFormBuilder($base)
             ->add('title', 'text')
             ->add('color', 'text')
@@ -175,8 +175,7 @@ class DefaultController extends Controller
             return $this->redirectToRoute('_home');
         }
         return array(
-            "base" => $base,
-            "form" => $form->createView());
+            "base" => $base, "form" => $form->createView(), "baseField" => $baseField);
     }
 
     /**
