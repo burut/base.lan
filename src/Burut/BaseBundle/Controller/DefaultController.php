@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Burut\BaseBundle\Entity\User;
 use Burut\BaseBundle\Entity\Base;
+use Burut\BaseBundle\Entity\FieldValue;
 use Burut\BaseBundle\Entity\BaseField;
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -138,7 +139,7 @@ class DefaultController extends Controller
     {
         $user = $this->getUser();
         $base = new Base();
-        $base->setUserId($user->getid());
+        $base->setUser($user);
         $base->setTitle("");
         $base->setColor("");
         $base->setKeyfieldId("");
@@ -157,14 +158,14 @@ class DefaultController extends Controller
      */
     public function baseEditAction($id, Request $request)
     {
+
         $em = $this->getDoctrine()->getEntityManager();
         $base = $em->getRepository('BurutBaseBundle:Base')->find($id);
 
         $form = $this->createFormBuilder($base)
-            ->add('user_id', 'text')
             ->add('title', 'text')
             ->add('color', 'text')
-            ->add('keyfield_id', 'text')
+//            ->add('keyField', 'text')
             ->getForm();
         $form->handleRequest($request);
         if ($form->isValid()) {
@@ -331,61 +332,36 @@ class DefaultController extends Controller
         return ["base" => $base, "editRecordArray" => $editRecordArray, "baseRowId" => $baseRowId]; // "values" => $values,
     }
     /**
-     * @Route("/create_record", name="_create_record")
+     * @Route("/create_record/{id}", name="_create_record")
      * @Template()
      * @Security("has_role('ROLE_USER')")
      */
-    public function createRecordAction()
+    public function createRecordAction($id)
     {
-//        $em = $this->getDoctrine()->getEntityManager();
-//        $baseRow = $em->getRepository("BurutBaseBundle:BaseRow")->find($id);
-//        $user = $this->getUser();
-//        $base = $baseRow->getBase();
-
+        $user = $this->getUser();
+        $em = $this->getDoctrine()->getEntityManager();
+        $base = $em->getRepository("BurutBaseBundle:Base")->find($id);
+        if (!$base) {
+            die("base not found");
+        }
+        if ($user != $base->getUser()) {
+            die("user not found");
+        }
         $baseRow = new BaseRow();
-        $baseRow->setBaseId($base->getId());
+        $baseRow->setBase($base);
         $em = $this->getDoctrine()->getEntityManager();
         $em->persist($baseRow);
+        $baseFields = $base->getBaseFields();
+        foreach ($baseFields as $baseField){
+            $fieldValue = new FieldValue();
+            $fieldValue->setBaseRow($baseRow);
+            $fieldValue->setBaseField($baseField);
+            $fieldValue->setValue("");
+            $em->persist($fieldValue);
+        }
         $em->flush();
 
-//        $em = $this->getDoctrine()->getEntityManager();
-//        $baseRow = $em->getRepository("BurutBaseBundle:BaseRow")->find($id);
-//        $user = $this->getUser();
-//        $base = $baseRow->getBase();
-//        if ($user != $base->getUser()) {
-//            die("user not found");
-//        }
-//        if (!$base) {
-//            die("base not found");
-//        }
-
-//        if ($request->getMethod() == "POST") {
-//            $fields = $request->request->all();
-//
-//            foreach ($baseRow->getFieldValues() as $fieldValue) {
-//                if (isset($fields[$fieldValue->getId()])) {
-//                    $value = $fields[$fieldValue->getId()];
-//                    $fieldValue->setValue(trim($value));
-//                }
-//            }
-//            $em->persist($fieldValue);
-//            $em->flush();
-//            return $this->redirectToRoute ('_edit_record', array("id" => $baseRow->getId()));
-//        }
-
-//        $editRecordArray = [];
-//        foreach ($baseRow->getFieldValues() as $fieldValue) {
-//            $config = str_replace("\r", "", $fieldValue->getBaseField()->getConfig()); // заменить левый перевод строки \r на пустой символ
-//
-//            $editRecordArray[$fieldValue->getId()] = [
-//                "field" => $fieldValue->getBaseField()->getTitle(),
-//                "value" => $fieldValue->getValue(),
-//                "type" => $fieldValue->getBaseField()->getFieldType()->getCode(),
-//                "config" => $config ? explode("\n", $config) : null
-//            ];
-//        }
-//        $baseRowId = $baseRow->getId();
-
-        return $this->redirectToRoute('_edit_record', array('id'=>$baseRow->getId()));    }
+        return $this->redirectToRoute('_edit_record', array('id'=>$baseRow->getId()));
+    }
 
 }

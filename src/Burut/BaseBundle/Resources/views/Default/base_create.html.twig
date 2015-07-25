@@ -1,5 +1,6 @@
 {% extends "@BurutBase/layout.html.twig" %}
 
+{% set user = base.user %}
 
 {% block content %}
     <form action="{{ path('_base_edit', {id:base.id}) }}" method="post" {{ form_enctype(form) }}>
