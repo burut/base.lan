@@ -141,7 +141,7 @@ class DefaultController extends Controller
         $base = new Base();
         $base->setUser($user);
         $base->setTitle("");
-        $base->setColor("");
+        $base->setColor("white");
         $base->setKeyfieldId("");
         $base->setCreatedAt(new \DateTime());
         $em = $this->getDoctrine()->getEntityManager();
@@ -151,31 +151,32 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/base_create/{id}", name="_base_edit")
+     * @Route("/base_edit/{id}", name="_base_edit")
      * @Template()
      * @Security("has_role('ROLE_USER')")
-     * @Template("BurutBaseBundle:Default:base_create.html.twig")
+     * @Template()
      */
     public function baseEditAction($id, Request $request)
     {
-
+        $colors = ["white","red","green","gray","yellow","blue","pink","oldlace"];
+        $user = $this->getUser();
         $em = $this->getDoctrine()->getEntityManager();
-        $base = $em->getRepository('BurutBaseBundle:Base')->find($id);
-        $baseField = $base->getBaseFields();
-        $form = $this->createFormBuilder($base)
-            ->add('title', 'text')
-            ->add('color', 'text')
-//            ->add('keyField', 'text')
-            ->getForm();
-        $form->handleRequest($request);
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getEntityManager();
-            $em->persist($base);
+        $base = $em->getRepository("BurutBaseBundle:Base")->find($id);
+        if (!$base) {
+            die("base not found");
+        }
+        if ($user != $base->getUser()) {
+            die("user not found");
+        }
+        if ($request->getMethod() == "POST") {
+            $form = $request->request->all();
+            $base->setTitle($form['title']);
+            $base->setColor($form['color']);
             $em->flush();
-            return $this->redirectToRoute('_home');
+            return $this->redirectToRoute ('_base_edit', array("id" => $id, "base" => $base));
         }
         return array(
-            "base" => $base, "form" => $form->createView(), "baseField" => $baseField);
+            "base" => $base, "colors" => $colors); // "form" => $form->createView(), "baseField" => $baseField
     }
 
     /**
@@ -362,5 +363,40 @@ class DefaultController extends Controller
 
         return $this->redirectToRoute('_edit_record', array('id'=>$baseRow->getId()));
     }
+
+    /**
+     * @Route("/base_edit_fields/{id}", name="_base_edit_fields")
+     * @Template()
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function baseEditFieldsAction($id)
+    {
+        $user = $this->getUser();
+        $em = $this->getDoctrine()->getEntityManager();
+        $base = $em->getRepository("BurutBaseBundle:Base")->find($id);
+        if (!$base) {
+            die("base not found");
+        }
+        if ($user != $base->getUser()) {
+            die("user not found");
+        }
+//        $baseRow = new BaseRow();
+//        $baseRow->setBase($base);
+//        $em = $this->getDoctrine()->getEntityManager();
+//        $em->persist($baseRow);
+//        $baseFields = $base->getBaseFields();
+//        foreach ($baseFields as $baseField){
+//            $fieldValue = new FieldValue();
+//            $fieldValue->setBaseRow($baseRow);
+//            $fieldValue->setBaseField($baseField);
+//            $fieldValue->setValue("");
+//            $em->persist($fieldValue);
+//        }
+//        $em->flush();
+//
+        return array('user'=>$user, "base"=>$base );
+    }
+
+
 
 }
