@@ -141,7 +141,7 @@ class DefaultController extends Controller
         $base = new Base();
         $base->setUser($user);
         $base->setTitle("");
-        $base->setColor("");
+        $base->setColor("white");
         $base->setKeyfieldId("");
         $base->setCreatedAt(new \DateTime());
         $em = $this->getDoctrine()->getEntityManager();
@@ -158,7 +158,7 @@ class DefaultController extends Controller
      */
     public function baseEditAction($id, Request $request)
     {
-        $colors = ["white","red","green","gray","black","blue","pink","oldlace"];
+        $colors = ["white","red","green","gray","yellow","blue","pink","oldlace"];
 
         var_dump($colors);
         $user = $this->getUser();
@@ -365,5 +365,40 @@ class DefaultController extends Controller
 
         return $this->redirectToRoute('_edit_record', array('id'=>$baseRow->getId()));
     }
+
+    /**
+     * @Route("/base_edit_fields/{id}", name="_base_edit_fields")
+     * @Template()
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function baseEditFieldsAction($id)
+    {
+        $user = $this->getUser();
+        $em = $this->getDoctrine()->getEntityManager();
+        $base = $em->getRepository("BurutBaseBundle:Base")->find($id);
+        if (!$base) {
+            die("base not found");
+        }
+        if ($user != $base->getUser()) {
+            die("user not found");
+        }
+        $baseRow = new BaseRow();
+        $baseRow->setBase($base);
+        $em = $this->getDoctrine()->getEntityManager();
+        $em->persist($baseRow);
+        $baseFields = $base->getBaseFields();
+        foreach ($baseFields as $baseField){
+            $fieldValue = new FieldValue();
+            $fieldValue->setBaseRow($baseRow);
+            $fieldValue->setBaseField($baseField);
+            $fieldValue->setValue("");
+            $em->persist($fieldValue);
+        }
+        $em->flush();
+
+        return $this->redirectToRoute('_edit_record', array('id'=>$baseRow->getId()));
+    }
+
+
 
 }

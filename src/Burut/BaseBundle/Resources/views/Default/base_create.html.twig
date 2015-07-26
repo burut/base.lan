@@ -1,12 +1,10 @@
 {% extends "@BurutBase/layout.html.twig" %}
-
 {% set user = base.user %}
-
 {% block content %}
     <div style="padding-left: 50px; padding-top: 50px;">
         <b>{{ base.title }}</b> Database setting
         <br/>
-        <div>Configuration&nbsp|&nbsp<a href="">Fields</a></div>
+        <div>Configuration&nbsp|&nbsp<a href="{{ path("_base_edit_fields", {id: base.id}) }}">Fields</a></div>
         <form method="post" action="{{ path("_base_edit", {id: base.id}) }}">
             <table>
                 <tr>
@@ -19,36 +17,14 @@
                         {% for color in colors %}
                         <label>
                             <div style="float: left; height: 21px; width: 21px; background-color:{{ color }};">
-                                <input type="radio" name="color" value="{{ color }}" checked></div>
+                                <input type="radio" name="color" value="{{ color }}" {{ color == base.color ? 'checked' : 'zzz' }}></div>
                         </label>
                         {% endfor %}
                     </td>
                 </tr>
-                    {#{% for key, base in baseField %}#}
-                    {#<tr>#}
-                        {#<td style="min-width: 70px; height: 30px; vertical-align: middle;">{{ editRecord.field }}</td>#}
-                        {#<td style="min-width: 70px; height: 30px; vertical-align: middle;">#}
-                            {#{% if editRecord.type == "CH" %}#}
-                                {#<input name="{{ key }}" type="checkbox" value="{{ editRecord.value }}">#}
-                            {#{% elseif editRecord.type == "LIST" %}#}
-                                {#<select name="{{ key }}">#}
-                                    {#{% for select in editRecord.config %}#}
-                                        {#<option {{ editRecord.value == select ? 'selected' : 'zzz' }} value="{{ select }}">{{ select }}</option>#}
-                                    {#{% endfor %}#}
-                                {#</select>#}
-                            {#{% else %}#}
-                                {#<input name="{{ key }}" type="text" value="{{ editRecord.value }}">#}
-                            {#{% endif %}#}
-                        {#</td>#}
-                        {#&#123;&#35;{% endfor %}&#35;&#125;#}
-                    {#</tr>#}
-                {#{% endfor %}#}
             </table>
             <input type="submit" value="Save changes">
-
         </form>
-
-        <br/></br>
         <a href="{{ path("_home") }}">Back to list</a>
     </div>
 {% endblock %}
