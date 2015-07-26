@@ -151,16 +151,14 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/base_create/{id}", name="_base_edit")
+     * @Route("/base_edit/{id}", name="_base_edit")
      * @Template()
      * @Security("has_role('ROLE_USER')")
-     * @Template("BurutBaseBundle:Default:base_create.html.twig")
+     * @Template()
      */
     public function baseEditAction($id, Request $request)
     {
         $colors = ["white","red","green","gray","yellow","blue","pink","oldlace"];
-
-        var_dump($colors);
         $user = $this->getUser();
         $em = $this->getDoctrine()->getEntityManager();
         $base = $em->getRepository("BurutBaseBundle:Base")->find($id);
@@ -382,21 +380,21 @@ class DefaultController extends Controller
         if ($user != $base->getUser()) {
             die("user not found");
         }
-        $baseRow = new BaseRow();
-        $baseRow->setBase($base);
-        $em = $this->getDoctrine()->getEntityManager();
-        $em->persist($baseRow);
-        $baseFields = $base->getBaseFields();
-        foreach ($baseFields as $baseField){
-            $fieldValue = new FieldValue();
-            $fieldValue->setBaseRow($baseRow);
-            $fieldValue->setBaseField($baseField);
-            $fieldValue->setValue("");
-            $em->persist($fieldValue);
-        }
-        $em->flush();
-
-        return $this->redirectToRoute('_edit_record', array('id'=>$baseRow->getId()));
+//        $baseRow = new BaseRow();
+//        $baseRow->setBase($base);
+//        $em = $this->getDoctrine()->getEntityManager();
+//        $em->persist($baseRow);
+//        $baseFields = $base->getBaseFields();
+//        foreach ($baseFields as $baseField){
+//            $fieldValue = new FieldValue();
+//            $fieldValue->setBaseRow($baseRow);
+//            $fieldValue->setBaseField($baseField);
+//            $fieldValue->setValue("");
+//            $em->persist($fieldValue);
+//        }
+//        $em->flush();
+//
+        return array('user'=>$user, "base"=>$base );
     }
 
 
