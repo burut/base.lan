@@ -6,33 +6,25 @@
         <b>{{ base.title }}</b> Edit database - fields
         <br/><br/>
         <div><a href="{{ path("_base_edit", {id: base.id}, {user: user}, {base: base}) }}">Configuration</a>&nbsp|&nbspFields</div>
-    </div>    {#<div style="padding-left: 50px; padding-top: 50px;">#}
-        {#<b>{{ base.title }}</b> Database setting#}
+    </div>
+    {#<div style="padding-left: 50px; padding-top: 50px;">#}
         {#<br/>#}
-        {#<div>Configuration&nbsp|&nbsp<a href="{{ path("_base_edit_fields", {id: base.id}) }}">Fields</a></div>#}
-        {#<form method="post" action="{{ path("_base_edit", {id: base.id}) }}">#}
-            {#<table>#}
-                {#<tr>#}
-                    {#<td>Name:</td>#}
-                    {#<td><input name="title" type="text" value="{{ base.title }}" /></td>#}
-                {#</tr>#}
-                {#<tr>#}
-                    {#<td>Color:</td>#}
-                    {#<td>#}
-                        {#{% for color in colors %}#}
-                        {#<label>#}
-                            {#<div style="float: left; height: 21px; width: 21px; background-color:{{ color }};">#}
-                                {#<input type="radio" name="color" value="{{ color }}" {{ color == base.color ? 'checked' : 'zzz' }}></div>#}
-                        {#</label>#}
-                        {#{% endfor %}#}
-                    {#</td>#}
-                {#</tr>#}
-            {#</table>#}
-            {#<input type="submit" value="Save changes">#}
-        {#</form>#}
-        {#<a href="{{ path("_home") }}">Back to list</a>#}
-    {#</div>#}
-    <br/>
+    <form>
+        <table>
+            <tr>
+                <td>Field title</td><td>Type</td><td>Field config</td><td>Show in list</td><td>Is required</td>
+            </tr>
+            {% for field in baseField %}
+
+            <tr>
+                <td>{{ field.title }}</td><td>{{ field.fieldType.code }}</td>
+                <td>{% if field.fieldType.code == "LIST" %} <a href="">Edit values</a>{% endif %}</td>
+                <td><input name="" type="checkbox" {{ field.isShow == 1 ? 'selected' : 'zzz' }} value="{{ field.isShow }}"  ></td>
+            </tr>
+            {% endfor %}
+        </table>
+    </form>
+             <br/>
     <a href="{{ path("_home") }}"><div style="display: inline-block; border: 2px solid #000000; border-radius: 5px; background-color: yellow;
  width: 120px; height: 20px; text-align: center; margin-left: 15px;">Back to base list</div></a>
 
