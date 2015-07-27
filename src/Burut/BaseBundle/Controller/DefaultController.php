@@ -147,6 +147,24 @@ class DefaultController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
         $em->persist($base);
         $em->flush();
+        $titleValues = ["title" => "1", "type" => "4", "rank" => "4", "year" => "2", "URL" => "3", "genre" => "4"];
+        foreach ($titleValues as $key => $value) {
+            var_dump($key, $value);
+            $baseField = new BaseField();
+            $baseField->setBase($base);
+            $baseField->setTitle($key);
+            $fieldType = $em->getRepository("BurutBaseBundle:FieldType")->find($value);
+            $baseField->setFieldType($fieldType);
+            $baseField->setConfig("");
+            $isShow = 0;
+            if ($key == "title" or "type" or "rank" or "genre"){$isShow = 1;}
+            $baseField->setIsShow($isShow);
+            $baseField->setIsRequiered("");
+            $em->persist($baseField);
+            $em->flush();
+        }
+
+        var_dump($baseField);
         return $this->redirectToRoute('_base_edit', array('id'=>$base->getId()));
     }
 
@@ -301,10 +319,8 @@ class DefaultController extends Controller
         if (!$base) {
             die("base not found");
         }
-
         if ($request->getMethod() == "POST") {
             $fields = $request->request->all();
-
             foreach ($baseRow->getFieldValues() as $fieldValue) {
                 if (isset($fields[$fieldValue->getId()])) {
                     $value = $fields[$fieldValue->getId()];
@@ -315,11 +331,9 @@ class DefaultController extends Controller
             $em->flush();
             return $this->redirectToRoute ('_edit_record', array("id" => $baseRow->getId()));
         }
-
         $editRecordArray = [];
         foreach ($baseRow->getFieldValues() as $fieldValue) {
             $config = str_replace("\r", "", $fieldValue->getBaseField()->getConfig()); // заменить левый перевод строки \r на пустой символ
-
             $editRecordArray[$fieldValue->getId()] = [
                 "field" => $fieldValue->getBaseField()->getTitle(),
                 "value" => $fieldValue->getValue(),
@@ -328,7 +342,6 @@ class DefaultController extends Controller
             ];
         }
         $baseRowId = $baseRow->getId();
-
         return ["base" => $base, "editRecordArray" => $editRecordArray, "baseRowId" => $baseRowId]; // "values" => $values,
     }
     /**
@@ -369,7 +382,7 @@ class DefaultController extends Controller
      * @Template()
      * @Security("has_role('ROLE_USER')")
      */
-    public function baseEditFieldsAction($id)
+    public function baseEditFieldsAction($id, Request $request)
     {
         $user = $this->getUser();
         $em = $this->getDoctrine()->getEntityManager();
@@ -380,6 +393,31 @@ class DefaultController extends Controller
         if ($user != $base->getUser()) {
             die("user not found");
         }
+//        if ($request->getMethod() == "POST") {
+//            $fields = $request->request->all();
+//            foreach ($base->getBaseField() as $fieldValue) {
+//                if (isset($fields[$fieldValue->getId()])) {
+//                    $value = $fields[$fieldValue->getId()];
+//                    $fieldValue->setValue(trim($value));
+//                }
+//            }
+//            $em->persist($fieldValue);
+//            $em->flush();
+//            return $this->redirectToRoute ('_edit_record', array("id" => $baseRow->getId()));
+//        }
+//        $editBaseFieldArray = [];
+//        foreach ($base->getBaseFields() as $baseField) {
+////            $config = str_replace("\r", "", $baseField->getBaseField()->getConfig()); // заменить левый перевод строки \r на пустой символ
+//            $editBaseFieldArray[$baseField->getId()] = [
+//                "title" => $baseField->getBaseField()->getTitle(),
+//                "value" => $baseField->getValue(),
+//                "type" => $baseField->getBaseField()->getFieldType()->getCode(),
+////                "config" => $config ? explode("\n", $config) : null
+//            ];
+//        }
+////        $baseId = $base->getId();
+//        return ["base" => $base, "editRecordArray" => $editRecordArray, "baseRowId" => $baseRowId]; // "values" => $values,
+
 //        $baseRow = new BaseRow();
 //        $baseRow->setBase($base);
 //        $em = $this->getDoctrine()->getEntityManager();
@@ -397,6 +435,36 @@ class DefaultController extends Controller
         return array('user'=>$user, "base"=>$base );
     }
 
+    /**
+     * @Route("/base_delete/{id}/{confirm}", name="_base_delete")
+     * @Template()
+     * @Security("has_role('ROLE_USER')")
+     */
 
-
+    public function baseDeleteAction($id, $confirm=0)
+    {
+//        $user = $this->getUser();
+//        $em = $this->getDoctrine()->getEntityManager();
+//        $baseRow = $em->getRepository("BurutBaseBundle:BaseRow")->find($id);
+//        $base = $baseRow->getBase();
+//
+//        if (!$base || $base->getUser() != $user) {
+//            die("base not found");
+//        }
+//
+//        if ($confirm == 1) {
+//            $em->remove($baseRow);
+//            $em->flush();
+//            return $this->redirectToRoute('_base_show', array('id'=>$base->getId()));
+//        }
+//
+//        $values = [];
+//        foreach ($baseRow->getFieldValues() as $fieldValue) {  // получаем значения полей строки
+//            $values[$fieldValue->getBaseField()->getTitle()] = $fieldValue->getValue();
+//        }
+//        $baseRowId = $baseRow->getId();
+//
+//
+//        return ["id" => $id, "base" => $base, "values" => $values, "baseRowId" => $baseRowId];
+    }
 }
