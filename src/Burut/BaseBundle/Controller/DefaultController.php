@@ -422,6 +422,7 @@ class DefaultController extends Controller
         return array('user'=>$user, "base"=>$base, "baseField"=>$baseField, "fieldType"=>$fieldType);
     }
 
+
     /**
      * @Route("/base_delete/{id}/{confirm}", name="_base_delete")
      * @Template()
