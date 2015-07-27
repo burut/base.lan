@@ -157,7 +157,7 @@ class DefaultController extends Controller
             $baseField->setFieldType($fieldType);
             $baseField->setConfig("");
             $isShow = 0;
-            if ($key == "title" or "type" or "rank" or "genre"){$isShow = 1;}
+            if ($key = "title" or "type" or "rank" or "genre"){$isShow = 1;}
             $baseField->setIsShow($isShow);
             $baseField->setIsRequiered("");
             $em->persist($baseField);
@@ -289,17 +289,6 @@ class DefaultController extends Controller
 
 
         return ["id" => $id, "base" => $base, "values" => $values, "baseRowId" => $baseRowId];
-//        $em = $this->getDoctrine()->getEntityManager();
-//        $furn = $em->getRepository('Burut\Bundle\MenuBundle\Entity\Furnit')->find($id);
-//
-//        if (!$furn) {
-//            throw $this->createNotFoundException('No furniture found for id '.$id);
-//        }
-//
-//        $em->remove($furn);
-//        $em->flush();
-//
-//        return $this->redirectToRoute('_furn_list');
     }
 
     /**
@@ -443,28 +432,17 @@ class DefaultController extends Controller
 
     public function baseDeleteAction($id, $confirm=0)
     {
-//        $user = $this->getUser();
-//        $em = $this->getDoctrine()->getEntityManager();
-//        $baseRow = $em->getRepository("BurutBaseBundle:BaseRow")->find($id);
-//        $base = $baseRow->getBase();
-//
-//        if (!$base || $base->getUser() != $user) {
-//            die("base not found");
-//        }
-//
-//        if ($confirm == 1) {
-//            $em->remove($baseRow);
-//            $em->flush();
-//            return $this->redirectToRoute('_base_show', array('id'=>$base->getId()));
-//        }
-//
-//        $values = [];
-//        foreach ($baseRow->getFieldValues() as $fieldValue) {  // получаем значения полей строки
-//            $values[$fieldValue->getBaseField()->getTitle()] = $fieldValue->getValue();
-//        }
-//        $baseRowId = $baseRow->getId();
-//
-//
-//        return ["id" => $id, "base" => $base, "values" => $values, "baseRowId" => $baseRowId];
+        $user = $this->getUser();
+        $em = $this->getDoctrine()->getEntityManager();
+        $base = $em->getRepository("BurutBaseBundle:Base")->find($id);
+        if (!$base || $base->getUser() != $user) {
+            die("base not found");
+        }
+        if ($confirm == 1) {
+            $em->remove($base);
+            $em->flush();
+            return $this->redirectToRoute('_home', array('id'=>$base->getId()));
+        }
+        return ["id" => $id, "base" => $base];
     }
 }

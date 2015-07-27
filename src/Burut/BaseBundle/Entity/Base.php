@@ -58,7 +58,7 @@ class Base
     protected $user;
 
     /**
-     * @ORM\OneToMany(targetEntity="BaseField", mappedBy="base")
+     * @ORM\OneToMany(targetEntity="BaseField", mappedBy="base", cascade={"remove"})
      */
     protected $baseFields;
 
