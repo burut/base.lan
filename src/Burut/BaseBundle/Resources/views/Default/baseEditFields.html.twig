@@ -19,7 +19,7 @@
             <tr>
                 <td>{{ field.title }}</td><td>{{ field.fieldType.code }}</td>
                 <td>{% if field.fieldType.code == "LIST" %} <a href="">Edit values</a>{% endif %}</td>
-                <td><input name="" type="checkbox" {{ field.isShow == 1 ? 'selected' : 'zzz' }} value="{{ field.isShow }}"  ></td>
+                <td><input name="" type="checkbox" {{ field.isShow == "1" ? 'checked' : 'zzz' }} value="{{ field.isShow }}"  ></td>
             </tr>
             {% endfor %}
         </table>
