@@ -381,46 +381,20 @@ class DefaultController extends Controller
         }
         if ($request->getMethod() == "POST") {
             $fields = $request->request->all();
-            var_dump($request);
-            foreach ($base->getBaseFields() as $baseField) {
-                if (isset($fields[$baseField->getId()])) {
-                    $value = $fields[$baseField->getId()];
-                    $baseField->setTitle(trim($value));
-                }
+
+            foreach ( $fields as $fieldId => $field) {
+                $baseField = $em->getRepository("BurutBaseBundle:BaseField")->find($fieldId);
+                $baseField->setTitle($field["title"]);
+                $fieldType = $em->getRepository("BurutBaseBundle:FieldType")->findOneByCode($field["type"]);
+                $baseField->setFieldType($fieldType);
+                $baseField->setIsShow(isset($field["isShow"]));
+                $baseField->setIsRequiered(isset($field["isRequiered"]));
             }
             $em->persist($baseField);
             $em->flush();
-            $em->flush();
-            return $this->redirectToRoute ('_base_edit_fields', array("id"=>$base, 'user'=>$user, "base"=>$base, "baseField"=>$baseField, "fieldType"=>$fieldType));
+            return $this->redirectToRoute('_base_edit_fields', array("id"=>$id, 'user'=>$user,
+                "base"=>$base, "baseField"=>$baseField, "fieldType"=>$fieldType));
         }
-//        $baseField = $base->getBaseFields();
-//        $baseFields = [];
-//        foreach ($base->getBaseFields() as $baseField) {
-//            $config = str_replace("\r", "", $baseField->getConfig()); // заменить левый перевод строки \r на пустой символ
-//            $baseFields[$baseField->getId()] = [
-//                "title" => $baseField->getTitle(),
-//                "type" => $baseField->getFieldType()->getCode(),
-//                "isShow" => $baseField->getIsShow(),
-//                "isRequiered" => $baseField->getIsRequiered(),
-//                "config" => $config ? explode("\n", $config) : null
-//            ];
-//        }
-////        $baseId = $base->getId();
-//        return ["base" => $base, "editRecordArray" => $editRecordArray, "baseRowId" => $baseRowId]; // "values" => $values,
-
-//        $baseRow = new BaseRow();
-//        $baseRow->setBase($base);
-//        $em = $this->getDoctrine()->getEntityManager();
-//        $em->persist($baseRow);
-//        foreach ($baseFields as $baseField){
-//            $fieldValue = new FieldValue();
-//            $fieldValue->setBaseRow($baseRow);
-//            $fieldValue->setBaseField($baseField);
-//            $fieldValue->setValue("");
-//            $em->persist($fieldValue);
-//        }
-//        $em->flush();
-//        var_dump($baseFields);
         return array('user'=>$user, "base"=>$base, "baseField"=>$baseField, "fieldType"=>$fieldType);
     }
 

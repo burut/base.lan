@@ -19,7 +19,7 @@
                 {#</tr>#}
             {#{% endfor %}#}
         </table>
-        <a href="{{ path("_base_show", {id: base.id}) }}">Back to list</a>
+        <a href="{{ path("_home", {id: base.id}) }}">Back to list</a>
         &nbsp&nbsp&nbsp
         <a href="{{ path("_base_delete", {id: base.id, confirm:1 }) }}">Delete</a>
     </div>

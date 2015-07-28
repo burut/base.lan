@@ -9,7 +9,7 @@
 
     {#<div style="padding-left: 50px; padding-top: 50px;">#}
         {#<br/>#}
-    <form method="post" action="{{ path("_base_edit_fields", {id: baseField.Id}) }}">
+    <form method="post" action="{{ path("_base_edit_fields", {id: base.id}) }}">
         <table>
             <tr>
                 <td>Field title</td><td>Type</td><td>Field config</td><td>Show in list</td><td>Is requiered</td>
@@ -17,17 +17,17 @@
             {% for field in baseField %}
 
             <tr>
-                <td><input type="text" value="{{ field.title }}" ></td>
+                <td><input name="{{ field.id }}[title]" type="text" value="{{ field.title }}" ></td>
                 <td>
-                    <select name="theme">
+                    <select name="{{ field.id }}[type]">
                        {% for type in fieldType %}
-                        <option value="{{ type.code }}" {{ type.code == field.fieldType.code ? 'selected' : 'zzz' }}>{{ type.code }}</option>
+                        <option value="{{ type.code }}" {{ type.code == field.fieldType.code ? 'selected' : '' }}>{{ type.code }}</option>
                        {% endfor %}
                     </select>
                 </td>
                 <td>{% if field.fieldType.code == "LIST" %} <a href="">Edit values</a>{% endif %}</td>
-                <td><input name="isShow" type="checkbox" {{ field.isShow == "1" ? 'checked' : 'zzz' }} value="{{ field.isShow }}"></td>
-                <td><input name="isRequiered" type="checkbox" {{ field.isRequiered == "1" ? 'checked' : 'zzz' }} value="{{ field.isRequiered }}"></td>
+                <td><input name="{{ field.id }}[isShow]" type="checkbox" {{ field.isShow ? 'checked' : '' }} ></td>
+                <td><input name="{{ field.id }}[isRequiered]" type="checkbox" {{ field.isRequiered ? 'checked' : '' }}></td>
                 <td><a href="">Delete</a></td>
             </tr>
             {% endfor %}
