@@ -6,25 +6,35 @@
         <b>{{ base.title }}</b> Edit database - fields
         <br/><br/>
         <div><a href="{{ path("_base_edit", {id: base.id}, {user: user}, {base: base}) }}">Configuration</a>&nbsp|&nbspFields</div>
-    </div>
+
     {#<div style="padding-left: 50px; padding-top: 50px;">#}
         {#<br/>#}
     <form>
         <table>
             <tr>
-                <td>Field title</td><td>Type</td><td>Field config</td><td>Show in list</td><td>Is required</td>
+                <td>Field title</td><td>Type</td><td>Field config</td><td>Show in list</td><td>Is requiered</td>
             </tr>
             {% for field in baseField %}
 
             <tr>
-                <td>{{ field.title }}</td><td>{{ field.fieldType.code }}</td>
+                <td><input type="text" value="{{ field.title }}" ></td>
+                <td>
+                    <select name="theme">
+                       {% for type in fieldType %}
+                        <option value="{{ type.code }}" {{ type.code == field.fieldType.code ? 'selected' : 'zzz' }}>{{ type.code }}</option>
+                       {% endfor %}
+                    </select>
+                </td>
                 <td>{% if field.fieldType.code == "LIST" %} <a href="">Edit values</a>{% endif %}</td>
-                <td><input name="" type="checkbox" {{ field.isShow == "1" ? 'checked' : 'zzz' }} value="{{ field.isShow }}"  ></td>
+                <td><input name="isShow" type="checkbox" {{ field.isShow == "1" ? 'checked' : 'zzz' }} value="{{ field.isShow }}"></td>
+                <td><input name="isRequiered" type="checkbox" {{ field.isRequiered == "1" ? 'checked' : 'zzz' }} value="{{ field.isRequiered }}"></td>
+                <td><a href="">Delete</a></td>
             </tr>
             {% endfor %}
         </table>
     </form>
-             <br/>
+    </div>
+    <br/>
     <a href="{{ path("_home") }}"><div style="display: inline-block; border: 2px solid #000000; border-radius: 5px; background-color: yellow;
  width: 120px; height: 20px; text-align: center; margin-left: 15px;">Back to base list</div></a>
 
