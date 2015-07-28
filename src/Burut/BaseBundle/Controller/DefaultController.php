@@ -379,18 +379,20 @@ class DefaultController extends Controller
         if ($user != $base->getUser()) {
             die("user not found");
         }
-//        if ($request->getMethod() == "POST") {
-//            $fields = $request->request->all();
-//            foreach ($base->getBaseField() as $fieldValue) {
-//                if (isset($fields[$fieldValue->getId()])) {
-//                    $value = $fields[$fieldValue->getId()];
-//                    $fieldValue->setValue(trim($value));
-//                }
-//            }
-//            $em->persist($fieldValue);
-//            $em->flush();
-//            return $this->redirectToRoute ('_edit_record', array("id" => $baseRow->getId()));
-//        }
+        if ($request->getMethod() == "POST") {
+            $fields = $request->request->all();
+            var_dump($request);
+            foreach ($base->getBaseFields() as $baseField) {
+                if (isset($fields[$baseField->getId()])) {
+                    $value = $fields[$baseField->getId()];
+                    $baseField->setTitle(trim($value));
+                }
+            }
+            $em->persist($baseField);
+            $em->flush();
+            $em->flush();
+            return $this->redirectToRoute ('_base_edit_fields', array("id"=>$base, 'user'=>$user, "base"=>$base, "baseField"=>$baseField, "fieldType"=>$fieldType));
+        }
 //        $baseField = $base->getBaseFields();
 //        $baseFields = [];
 //        foreach ($base->getBaseFields() as $baseField) {
