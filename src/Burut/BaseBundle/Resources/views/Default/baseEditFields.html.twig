@@ -7,8 +7,6 @@
         <br/><br/>
         <div><a href="{{ path("_base_edit", {id: base.id}, {user: user}, {base: base}) }}">Configuration</a>&nbsp|&nbspFields</div>
 
-    {#<div style="padding-left: 50px; padding-top: 50px;">#}
-        {#<br/>#}
     <form method="post" action="{{ path("_base_edit_fields", {id: base.id}) }}">
         <table>
             <tr>
@@ -25,7 +23,7 @@
                        {% endfor %}
                     </select>
                 </td>
-                <td>{% if field.fieldType.code == "LIST" %} <a href="">Edit values</a>{% endif %}</td>
+                <td>{% if field.fieldType.code == "LIST" %} <a href="{{ path("_field_config", {id: base.id}, {fieldId: field.id}) }}">Edit values</a>{% endif %}</td>
                 <td><input name="{{ field.id }}[isShow]" type="checkbox" {{ field.isShow ? 'checked' : '' }} ></td>
                 <td><input name="{{ field.id }}[isRequiered]" type="checkbox" {{ field.isRequiered ? 'checked' : '' }}></td>
                 <td><a href="">Delete</a></td>
@@ -33,7 +31,9 @@
             {% endfor %}
         </table>
         <br/>
-        <input type="submit" value="Save changes">
+        <input style="display: inline-block;" type="submit" value="Save changes">
+        <a href="{{ path("_add_field", {id: base.id}) }}"><div style="display: inline-block; border: 2px solid #000000; border-radius: 5px; background-color: yellow;
+ width: 120px; height: 20px; text-align: center; margin-left: 50px;">Add new field</div></a>
     </form>
     </div>
     <br/>

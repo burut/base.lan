@@ -398,6 +398,32 @@ class DefaultController extends Controller
         return array('user'=>$user, "base"=>$base, "baseField"=>$baseField, "fieldType"=>$fieldType);
     }
 
+    /**
+     * @Route("/add_field/{id}", name="_add_field")
+     * @Template()
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function addFieldAction($id, Request $request)
+    {
+        var_dump($id);
+    }
+
+    /**
+     * @Route("/field_config/{id}/", name="_field_config")
+     * @Template()
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function fieldConfigAction($id, $fieldId, Request $request)
+    {
+        var_dump($id);
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $field = $em->getRepository("BurutBaseBundle:BaseField")->findOneById($fieldId)->getConfig();
+        $base = $em->getRepository("BurutBaseBundle:Base")->findOneBy($id)->getTitle();
+        var_dump($field, $base);
+
+        return [ "field"=>$field, ];
+    }
 
     /**
      * @Route("/base_delete/{id}/{confirm}", name="_base_delete")
