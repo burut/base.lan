@@ -63,7 +63,7 @@ class BaseField
     protected $fieldType;
 
     /**
-     * @ORM\OneToMany(targetEntity="FieldValue", mappedBy="baseField")
+     * @ORM\OneToMany(targetEntity="FieldValue", mappedBy="baseField", cascade={"persist", "remove"})
      */
     protected $fieldValues;
 
