@@ -63,7 +63,7 @@ class Base
     protected $baseFields;
 
     /**
-     * @ORM\OneToMany(targetEntity="BaseRow", mappedBy="base")
+     * @ORM\OneToMany(targetEntity="BaseRow", mappedBy="base", cascade={"remove", "persist"})
      */
     protected $baseRows;
 
