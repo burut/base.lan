@@ -28,7 +28,6 @@
                    <td>{{ values[row.id][field.id] }}</td>
                 {% endif %}
             {% endfor %}
-            {#vardump {values.id}#}
             <td><a href="{{ path("_view_record", {id: row.id}) }}">View</a></td>
             <td><a href="{{ path("_edit_record", {id: row.id}) }}">Edit</a></td>
             <td><a href="{{ path("_record_delete", {id: row.id}) }}">Delete</a></td>

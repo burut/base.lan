@@ -399,30 +399,60 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/add_field/{id}", name="_add_field")
+     * @Route("/add_field/{id}/", name="_add_field")
      * @Template()
      * @Security("has_role('ROLE_USER')")
      */
     public function addFieldAction($id, Request $request)
     {
+        $em = $this->getDoctrine()->getEntityManager();
+        $base = $em->getRepository("BurutBaseBundle:Base")->find($id);
+
         var_dump($id);
+        $baseField = new BaseField();
+        $baseField->setBase($base);
+        $baseField->setTitle("");
+        $fieldType = $em->getRepository("BurutBaseBundle:FieldType")->find(true);
+        $baseField->setFieldType($fieldType);
+//        $baseField->setFieldType("");
+        $baseField->setConfig("");
+        $baseField->setIsShow("");
+        $baseField->setIsRequiered("");
+        $em->persist($baseField);
+        $em->flush();
+
+        return $this->redirectToRoute('_base_edit_fields', array("id"=>$id));
     }
 
     /**
-     * @Route("/field_config/{id}/", name="_field_config")
+     * @Route("/field_config/{id}/{fieldId}", name="_field_config")
      * @Template()
      * @Security("has_role('ROLE_USER')")
      */
     public function fieldConfigAction($id, $fieldId, Request $request)
     {
-        var_dump($id);
+        $user = $this->getUser();
         $em = $this->getDoctrine()->getEntityManager();
 
-        $field = $em->getRepository("BurutBaseBundle:BaseField")->findOneById($fieldId)->getConfig();
-        $base = $em->getRepository("BurutBaseBundle:Base")->findOneBy($id)->getTitle();
-        var_dump($field, $base);
+        $field = $em->getRepository("BurutBaseBundle:BaseField")->findOneById($fieldId);  //->getConfig();
+        $base = $em->getRepository("BurutBaseBundle:Base")->findOneById($id)->getTitle();
+        if (!$base) {
+            die("base not found");
+        }
+//        if ($user != $base->getUser()) {
+//            die("user not found");                                <---------- !!!!!!!!!
+//        }
+        if ($request->getMethod() == "POST") {
+            $config = $request->request->all();
+            $baseField = $em->getRepository("BurutBaseBundle:BaseField")->find($fieldId);
+            $baseField->setConfig($config["fieldConfig"]);
+            $em->persist($baseField);
+            $em->flush();
+            return $this->redirectToRoute('_field_config', array("id"=>$id,
+                "base"=>$base, "fieldId"=>$fieldId,));
+        }
 
-        return [ "field"=>$field, ];
+        return [ "field"=>$field, "base"=>$base, "id"=>$id, "user"=>$user, "fieldId"=>$fieldId, "id"=>$id];
     }
 
     /**

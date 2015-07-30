@@ -1,8 +1,26 @@
 {% extends "@BurutBase/layout.html.twig" %}
 {#{% set user = base.user %}#}
-{#{% block content %}#}
+{% block content %}
     {#<div style="padding-left: 50px; padding-top: 50px;">#}
-        {#<b>{{ base.title }}</b> Database setting#}
+    <div>Database <b>"{{ base }}"</b>, field "{{field.title }}"</div>
+    <br/>
+    <div>Enter each value per separate line:</div>
+    <form method="post" action="{{ path("_field_config", {id: id, fieldId: fieldId}) }}">
+    <table>
+        <tr>
+            <td>
+                <textarea name="fieldConfig" style="height: 200px;">{{ field.config }}</textarea>
+            </td>
+            <td style="vertical-align: top;">
+                <input type="submit" value="Save changes">
+                <br/><br/>
+                <a href="{{ path("_base_edit_fields", {id: id}) }}"><div style="display: inline-block;
+                border: 2px solid #000000; border-radius: 5px; background-color: yellow;
+                width: 80px; height: 20px; text-align: center;">Cancel</div></a>
+            </td>
+        </tr>
+    </table>
+    </form>
         {#<br/>#}
         {#<div>Configuration&nbsp|&nbsp<a href="{{ path("_base_edit_fields", {id: base.id}, {user: user}, {base: base}) }}">Fields</a></div>#}
         {#<form method="post" action="{{ path("_base_edit", {id: base.id}) }}">#}
@@ -29,4 +47,4 @@
     {#</div>#}
     {#<a href="{{ path("_home") }}"><div style="display: inline-block; border: 2px solid #000000; border-radius: 5px; background-color: yellow;#}
  {#width: 120px; height: 20px; text-align: center; margin-left: 15px;">Back to base list</div></a>#}
-{#{% endblock %}#}
+{% endblock %}
