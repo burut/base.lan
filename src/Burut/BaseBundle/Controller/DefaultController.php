@@ -263,6 +263,7 @@ class DefaultController extends Controller
     {
         $user = $this->getUser();
         $em = $this->getDoctrine()->getEntityManager();
+        $baseId = $em->getRepository("BurutBaseBundle:Base")->find($id);
         $baseRow = $em->getRepository("BurutBaseBundle:BaseRow")->find($id);
         $base = $baseRow->getBase();
 
@@ -273,7 +274,7 @@ class DefaultController extends Controller
         if ($confirm == 1) {
             $em->remove($baseRow);
             $em->flush();
-            return $this->redirectToRoute('_base_show', array('id'=>$base->getId()));
+            return $this->redirectToRoute('_base_show', array('id'=>$baseId));
         }
 
         $values = [];
@@ -313,7 +314,7 @@ class DefaultController extends Controller
             }
             $em->persist($fieldValue);
             $em->flush();
-            return $this->redirectToRoute ('_edit_record', array("id" => $baseRow->getId()));
+            return $this->redirectToRoute ('_base_show', array("id" => $base->getId()));
         }
         $editRecordArray = [];
         foreach ($baseRow->getFieldValues() as $fieldValue) {
