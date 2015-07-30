@@ -408,13 +408,11 @@ class DefaultController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
         $base = $em->getRepository("BurutBaseBundle:Base")->find($id);
 
-        var_dump($id);
         $baseField = new BaseField();
         $baseField->setBase($base);
         $baseField->setTitle("");
         $fieldType = $em->getRepository("BurutBaseBundle:FieldType")->find(true);
         $baseField->setFieldType($fieldType);
-//        $baseField->setFieldType("");
         $baseField->setConfig("");
         $baseField->setIsShow("");
         $baseField->setIsRequiered("");
@@ -433,15 +431,16 @@ class DefaultController extends Controller
     {
         $user = $this->getUser();
         $em = $this->getDoctrine()->getEntityManager();
-
+        $base = $em->getRepository("BurutBaseBundle:Base")->find($id);
+        if ($user != $base->getUser()) {
+            die("user not found");
+        }
         $field = $em->getRepository("BurutBaseBundle:BaseField")->findOneById($fieldId);  //->getConfig();
         $base = $em->getRepository("BurutBaseBundle:Base")->findOneById($id)->getTitle();
+
         if (!$base) {
             die("base not found");
         }
-//        if ($user != $base->getUser()) {
-//            die("user not found");                                <---------- !!!!!!!!!
-//        }
         if ($request->getMethod() == "POST") {
             $config = $request->request->all();
             $baseField = $em->getRepository("BurutBaseBundle:BaseField")->find($fieldId);
@@ -474,6 +473,28 @@ class DefaultController extends Controller
             $em->flush();
             return $this->redirectToRoute('_home', array('id'=>$base->getId()));
         }
+        return ["id" => $id, "base" => $base];
+    }
+
+    /**
+     * @Route("/field_delete/{id}/{fieldId}", name="_field_delete")
+     * @Template()
+     * @Security("has_role('ROLE_USER')")
+     */
+
+    public function fieldDeleteAction($id, $fieldId)
+    {
+        $user = $this->getUser();
+        $em = $this->getDoctrine()->getEntityManager();
+        $base = $em->getRepository("BurutBaseBundle:Base")->find($id);
+        $baseField = $em->getRepository("BurutBaseBundle:BaseField")->find($fieldId);
+
+        if (!$base || $base->getUser() != $user) {
+            die("base not found");
+        }
+        $em->remove($baseField);
+        $em->flush();
+        return $this->redirectToRoute('_base_edit_fields', array('id'=>$id ));
         return ["id" => $id, "base" => $base];
     }
 }

@@ -26,7 +26,7 @@
                 <td>{% if field.fieldType.code == "LIST" %}<a href="{{ path("_field_config", {id: base.id, fieldId: field.id }) }}">Edit values</a>{% endif %}</td>
                 <td><input name="{{ field.id }}[isShow]" type="checkbox" {{ field.isShow ? 'checked' : '' }} ></td>
                 <td><input name="{{ field.id }}[isRequiered]" type="checkbox" {{ field.isRequiered ? 'checked' : '' }}></td>
-                <td><a href="">Delete</a></td>
+                <td><a href="{{ path("_field_delete", {id: base.id, fieldId: field.id }) }}">Delete</a></td>
             </tr>
             {% endfor %}
         </table>
