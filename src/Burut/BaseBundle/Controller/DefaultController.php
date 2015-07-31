@@ -263,9 +263,9 @@ class DefaultController extends Controller
     {
         $user = $this->getUser();
         $em = $this->getDoctrine()->getEntityManager();
-        $baseId = $em->getRepository("BurutBaseBundle:Base")->find($id);
         $baseRow = $em->getRepository("BurutBaseBundle:BaseRow")->find($id);
         $base = $baseRow->getBase();
+        $baseId = $em->getRepository("BurutBaseBundle:Base")->find($base)->getId();
 
         if (!$base || $base->getUser() != $user) {
             die("base not found");
@@ -448,8 +448,7 @@ class DefaultController extends Controller
             $baseField->setConfig($config["fieldConfig"]);
             $em->persist($baseField);
             $em->flush();
-            return $this->redirectToRoute('_field_config', array("id"=>$id,
-                "base"=>$base, "fieldId"=>$fieldId,));
+            return $this->redirectToRoute('_base_edit_fields', array("id"=>$id));
         }
 
         return [ "field"=>$field, "base"=>$base, "id"=>$id, "user"=>$user, "fieldId"=>$fieldId, "id"=>$id];

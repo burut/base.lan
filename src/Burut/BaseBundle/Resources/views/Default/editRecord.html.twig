@@ -35,11 +35,15 @@
          </tr>
     {% endfor %}
     </table>
-        <input type="submit" value="Save changes">
-
+        <br/>
+        <div style="display: inline-block;"><input style="border: 2px solid #000000; border-radius: 5px; background-color: yellow;
+                width: 120px !important; font-size: 14px; height: 25px; text-align: center;" type="submit" value="Save changes">
+            <a href="{{ path("_base_show", {id: base.id}) }}"><div style="display: inline-block; margin-left: 30px;
+                border: 2px solid #000000; border-radius: 5px; background-color: yellow;
+                width: 90px; height: 20px; text-align: center;">Back to list</div></a>
+        </div>
     </form>
+    <br/>
 
-    <br/></br>
-    <a href="{{ path("_base_show", {id: base.id}) }}">Back to list</a>&nbsp&nbsp&nbsp&nbsp&nbsp
 </div>
 {% endblock %}

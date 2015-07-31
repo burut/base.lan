@@ -3,7 +3,7 @@
 
 {% block content %}
 
-<div style="padding-left: 50px; padding-top: 50px;">
+<div style="padding-left: 50px; padding-top: 50px;" xmlns="http://www.w3.org/1999/html">
     <b>{{ base.title }}</b> - delete record
     <div style="padding-left: 30px; padding-top: 30px;">
         You sure to delete this record?<br><br>
@@ -19,9 +19,11 @@
                 </tr>
             {% endfor %}
         </table>
-        <a href="{{ path("_base_show", {id: base.id}) }}">Back to list</a>
-        &nbsp&nbsp&nbsp
-        <a href="{{ path("_record_delete", {id: baseRowId, confirm:1 }) }}">Delete</a>
+        <br/>
+        <a href="{{ path("_record_delete", {id: baseRowId, confirm:1 }) }}"><div style="display: inline-block; border: 2px solid #000000; border-radius: 5px; background-color: yellow;
+ width: 70px; height: 20px; text-align: center;">Delete</div></a>
+        <a href="{{ path("_base_show", {id: base.id}) }}"><div style="display: inline-block; border: 2px solid #000000; border-radius: 5px; background-color: yellow;
+ width: 120px; height: 20px; text-align: center; margin-left: 15px;">Back to list</div></a>
     </div>
 </div>
 

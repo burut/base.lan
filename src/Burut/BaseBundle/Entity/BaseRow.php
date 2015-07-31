@@ -33,7 +33,7 @@ class BaseRow
     }
 
     /**
-     * @ORM\ManyToOne(targetEntity="Base", inversedBy="baseRows", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity="Base", inversedBy="baseRows")
      * @ORM\JoinColumn(name="base_id", referencedColumnName="id")
      */
     protected $base;

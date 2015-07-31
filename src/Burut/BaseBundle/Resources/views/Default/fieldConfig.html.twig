@@ -21,30 +21,5 @@
         </tr>
     </table>
     </form>
-        {#<br/>#}
-        {#<div>Configuration&nbsp|&nbsp<a href="{{ path("_base_edit_fields", {id: base.id}, {user: user}, {base: base}) }}">Fields</a></div>#}
-        {#<form method="post" action="{{ path("_base_edit", {id: base.id}) }}">#}
-            {#<table>#}
-                {#<tr>#}
-                    {#<td>Name:</td>#}
-                    {#<td><input name="title" type="text" value="{{ base.title }}" /></td>#}
-                {#</tr>#}
-                {#<tr>#}
-                    {#<td>Color:</td>#}
-                    {#<td>#}
-                        {#{% for color in colors %}#}
-                            {#<label>#}
-                                {#<div style="float: left; height: 21px; width: 21px; background-color:{{ color }};">#}
-                                    {#<input type="radio" name="color" value="{{ color }}" {{ color == base.color ? 'checked' : 'zzz' }}></div>#}
-                            {#</label>#}
-                        {#{% endfor %}#}
-                    {#</td>#}
-                {#</tr>#}
-            {#</table>#}
-            {#<input type="submit" value="Save changes">#}
-        {#</form>#}
-        {#</br>#}
-    {#</div>#}
-    {#<a href="{{ path("_home") }}"><div style="display: inline-block; border: 2px solid #000000; border-radius: 5px; background-color: yellow;#}
- {#width: 120px; height: 20px; text-align: center; margin-left: 15px;">Back to base list</div></a>#}
+
 {% endblock %}
